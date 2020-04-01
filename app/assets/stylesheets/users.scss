@@ -61,3 +61,15 @@
   margin: 15px 0;
   width: 30%;
 }
+
+/* 出勤者情報テーブル */
+#table-attend_employees {
+  th {
+    vertical-align: middle;
+    text-align: center;
+  }
+  td {
+    vertical-align: middle;
+    text-align: center;
+  }
+}
