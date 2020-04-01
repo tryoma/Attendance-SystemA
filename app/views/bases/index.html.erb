@@ -1,0 +1,29 @@
+<% provide(:title, '拠点') %>
+<h1>拠点一覧</h1>
+<table class="table table-bordered table-hover" id= "table-attend_employees">
+  <thead>
+    <tr>
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+      <th colspan="2">拠点番号</th>
+      <th colspan="2">拠点名</th>
+      <th colspan="2">勤怠種類</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th colspan="2">
+        <%= link_to "修正", "", class: "btn btn-primary" %>
+      </th>
+      <th colspan="2">
+         <%= link_to "削除", "", class: "btn btn-primary" %>
+      </th>
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+  </tbody>
+</table>
+<div class="center jumbotron">
+  <%= link_to "拠点情報追加", "", class: "btn btn-primary" %>
+</div>
