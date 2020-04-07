@@ -11,12 +11,12 @@
         指定勤務開始時間：<%= @user.designated_work_start_time %><br>
         指定勤務終了時間：<%= @user.designated_work_end_time %>
       </td>
-      <td colspan="2">基本時間：<%= format_basic_info(@user.basic_time) %></td>
+      <td colspan="2">基本時間：<%= format_basic_info(@user.basic_work_time) %></td>
       <td colspan="2">月初日：<%= l(@first_day, format: :short) %></td>
     </tr>
 
     <tr>
-      <td colspan="4">所属：<%= @user.department.present? ? @user.department : "未所属" %></td>
+      <td colspan="4">所属：<%= @user.affiliation.present? ? @user.affiliation : "未所属" %></td>
       <td colspan="2">名前：<%= @user.name %></td>
       <td colspan="1">コード</td>
       <td colspan="1">５５５５</td>
