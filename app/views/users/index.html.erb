@@ -1,4 +1,6 @@
 <% provide(:title, 'All Users') %>
+<% provide(:class_text, 'basic-info') %>
+<% provide(:button_text, '更新') %>
 <h1>ユーザー一覧</h1>
 
 <td class="center">
@@ -19,7 +21,10 @@
               <%= user.name %><br>
               <%= link_to "削除", user, method: :delete,
                     data: { confirm: "削除してよろしいですか？" }, class: "btn btn-primary" %><br>
-              <%= link_to "編集", edit_basic_info_user_path(user), class: "btn btn-primary" %>
+              <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#<%=user.id %>">編集</button>
+                <div id="<%=user.id %>" class="collapse">
+                  <%= render 'users/form3', object: @user %>
+                </div>
             <% end %>
           </td>
         </tr>

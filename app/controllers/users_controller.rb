@@ -7,6 +7,14 @@ class UsersController < ApplicationController
 
   def index
     @users = User.paginate(page: params[:page])
+    if params[:name].present?
+      @users = @users.get_by_name params[:name]
+    end
+    if params[:id].present?
+      @user = User.find_by(id: @users.id)
+    else
+      @user = User.new
+    end
   end
 
   def show
