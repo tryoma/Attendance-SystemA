@@ -1,20 +1,12 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :attend_employees]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :attend_employees,  :edit_basic_info, :update_basic_info]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :attend_employees]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :attend_employees]
   before_action :set_one_month, only: :show
 
   def index
-    @users = User.paginate(page: params[:page])
-    if params[:name].present?
-      @users = @users.get_by_name params[:name]
-    end
-    if params[:id].present?
-      @user = User.find_by(id: @users.id)
-    else
-      @user = User.new
-    end
+    @users = User.all
   end
 
   def show
@@ -58,7 +50,7 @@ class UsersController < ApplicationController
   end
 
   def update_basic_info
-    if @user.update_attributes(basic_info_params)
+    if @user.update_attributes(user_info_params)
       flash[:success] = "基本情報を更新しました。"
     else
       flash[:danger] = "更新が失敗しました。<br>" + @user.errors.full_messages.join("<br>")
@@ -75,8 +67,8 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation)
     end
 
-    def basic_info_params
-      params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :basic_work_time, :designated_work_start_time, :designated_work_end_time, :password, :password_confirmation)
+    def user_info_params
+      params.require(:user).permit(:name, :email, :affiliation, :basic_work_time, :designated_work_start_time, :designated_work_end_time, :uid, :employee_number )
     end
 
 end
