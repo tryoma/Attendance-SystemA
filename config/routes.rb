@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       patch 'attendances/update_one_month'
       get 'attend_employees'
     end
+    collection { post :import }
     resources :attendances, only: :update
   end
 end

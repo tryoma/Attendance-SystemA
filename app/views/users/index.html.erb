@@ -4,11 +4,10 @@
 <h1>ユーザー一覧</h1>
 
 <td class="center">
-  <%= link_to "ファイルを選択", "#", remote: true, class: "btn btn-default" %>
-</td>
-
-<td class="center">
-  <%= link_to "CSVをインポート","#", remote: true, class: "btn btn-primary" %>
+  <%= form_tag import_users_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "インポート" %>
+  <% end %>
 </td>
 
 <div class="col-md-11 col-md-offset-1">
