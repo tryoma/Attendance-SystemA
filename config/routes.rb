@@ -19,6 +19,10 @@ Rails.application.routes.draw do
       get 'attend_employees'
     end
     collection { post :import }
-    resources :attendances, only: :update
+    resources :attendances do
+      member do
+        get 'overtime'
+      end
+    end
   end
 end
