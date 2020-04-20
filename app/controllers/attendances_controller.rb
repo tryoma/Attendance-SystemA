@@ -48,6 +48,9 @@ class AttendancesController < ApplicationController
     @attendance = Attendance.find(params[:id])
   end 
 
+  def request_overtime
+    debugger
+  end
 
   private
     # 1ヶ月分の勤怠情報を扱います。

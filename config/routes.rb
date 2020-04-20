@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :attendances do
       member do
         get 'overtime'
+        patch 'request_overtime'
       end
     end
   end
