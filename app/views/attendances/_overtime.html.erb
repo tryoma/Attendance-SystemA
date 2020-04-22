@@ -25,8 +25,8 @@
           
           <tbody>
             <tr>
-              <th><%= l(@attendance.worked_on, format: :short) %></th>
-              <th></th>
+              <th><%= l(@day, format: :short) %></th>
+              <th><%= @youbi %></th>
               <th><%= f.time_field  :plan_finished_at, class: "form-control" %></th>
               <th><%= f.check_box :tomorrow, {}, "true", "false" %></th>
               <th><%= f.text_field :business_processing_contents, class: "form-control" %></th>
