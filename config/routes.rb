@@ -17,12 +17,13 @@ Rails.application.routes.draw do
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
       get 'attend_employees'
+      get 'attendances/overtime'
+      patch 'attendances/request_overtime'
     end
     collection { post :import }
     resources :attendances do
       member do
-        get 'overtime'
-        patch 'request_overtime'
+        
       end
     end
   end
