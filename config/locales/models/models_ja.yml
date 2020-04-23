@@ -22,6 +22,9 @@ ja:
           started_at: 出勤時間
           finished_at: 退勤時間
           note: 備考
+          plan_finished_at: 終了予定時間
+          business_processing_contents: 業務処理内容
+          instructor_confirmation: 指示者確認
           user: ユーザーID 
         base:
           base_number: 拠点番号
