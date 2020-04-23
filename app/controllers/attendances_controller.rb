@@ -44,17 +44,31 @@ class AttendancesController < ApplicationController
   end
   
   def overtime
-    @day = Date.parse(params[:day])
+    @day = Date.parse(params[:date])
     @youbi = %w(日 月 火 水 木 金 土)[@day.wday]
+    @attendance = Attendance.find_by(worked_on:params[:date])
   end 
 
   def request_overtime
+    @attendance = Attendance.find(params[:id])
+    if @attendance.update_attributes(overtime_params)
+      flash[:success] = "残業申請しました。"
+      redirect_to user_url
+    else
+      flash[:danger] = "残業申請に失敗しました。"
+      redirect_to user_url     
+    end
   end
 
   private
     # 1ヶ月分の勤怠情報を扱います。
     def attendances_params
       params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
+    end
+    
+     # 残業申請情報を扱います。
+    def overtime_params
+      params.require(:attendance).permit(:plan_finished_at, :tomorrow, :business_processing_contents, :instructor_confirmation)
     end
     
     # beforeフィルター

@@ -83,7 +83,7 @@
       %>
         <tr>
           <td>
-            <%= link_to "残業申請", attendances_overtime_user_path(@user,params:{ day: day.worked_on, youbi: %w{日 月 火 水 木 金 土}[day.worked_on.wday] }), remote: true,class: "btn btn-primary btn-primary" %>
+            <%= link_to "残業申請", attendances_overtime_user_path(params:{ date: day.worked_on, youbi: %w{日 月 火 水 木 金 土}[day.worked_on.wday] }), remote: true,class: "btn btn-primary btn-primary" %>
           </td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td class="<%= css_class %>">
@@ -107,10 +107,10 @@
           </td>
           <td></td>
           <td><%= day.note %></td>
+          <td><%= day.plan_finished_at %></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td><%= day.business_processing_contents%></td>
+          <td><%= day.instructor_confirmation %></td>
         </tr>
       <% end %>
     </tbody>
