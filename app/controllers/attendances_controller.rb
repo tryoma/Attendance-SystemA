@@ -50,7 +50,7 @@ class AttendancesController < ApplicationController
   end 
 
   def request_overtime
-    @attendance = Attendance.find(params[:id])
+    @attendance = Attendance.find_by(worked_on: params[:date])
     if @attendance.update_attributes(overtime_params)
       flash[:success] = "残業申請しました。"
       redirect_to user_url
