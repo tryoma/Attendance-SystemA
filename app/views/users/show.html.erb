@@ -110,6 +110,7 @@
           <td><%= l(day.plan_finished_at.floor_to(15.minutes), format: :tm) if day.plan_finished_at.present? %> </td>
           <td>
             <% if day.plan_finished_at.present?  %>
+             <%= debug @user.designated_work_end_time %>
              <%= out_over_times = over_working_times(@user.designated_work_end_time, day.plan_finished_at) %>
             <% end %>
           </td>
