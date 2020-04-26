@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: [:edit_one_month, :update_one_month, :overtime]
+  before_action :set_user, only: [:edit_one_month, :update_one_month, :overtime, :reply_overtime]
   before_action :logged_in_user, only: [:update, :edit_one_month]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month, :overtime]
@@ -58,6 +58,10 @@ class AttendancesController < ApplicationController
       flash[:danger] = "残業申請に失敗しました。"
       redirect_to user_url     
     end
+  end
+  
+  def reply_overtime
+    @attendance = Attendance.where.not(plan_finished_at: nil)
   end
 
   private
