@@ -1,19 +1,9 @@
 <% provide(:class_text, 'overtime') %>
 <% provide(:button_text, '変更を送信する。') %>
 
- <%= form_with(model: @attendance, url: "#", local: true, method: :patch) do |f| %>
-  <% @attendance.each do |attendance| %>
-   <h1>【<%= "#" %>からの残業申請】</h1>
-  
-    <% css_class = 
-      case %w{日 月 火 水 木 金 土}[attendance.worked_on.wday]
-      when '土'
-        'text-primary'
-      when '日'
-        'text-danger'
-      end
-    %>
-    
+<%= form_with(model: @attendance, url: "#", local: true, method: :patch) do |f| %>
+  <% @users.each do |user| %>
+    <h1>【<%= user.name %>からの残業申請】</h1>
     <table class="table table-bordered ">
       <thead>
         <tr>
@@ -28,31 +18,40 @@
           <th>勤怠を確認する</th>
         </tr>
       </thead>
-      
-      <tbody>
-        <tr>
-          <th><%= l(attendance.worked_on, format: :short) %></th>
-          <th class="<%= css_class %>">
-            <%= %w{日 月 火 水 木 金 土}[attendance.worked_on.wday] %>
-          </th>
-          <th><%= l(attendance.plan_finished_at, format: :time) if attendance.plan_finished_at.present? %> </th>
-          <th><%= l(@user.designated_work_end_time, format: :time) %></th>
-          <th>
-            <% if attendance.plan_finished_at.present?  %>
-             <%= out_over_times = over_working_times(format_basic_info(attendance.plan_finished_at), format_basic_info(@user.designated_work_end_time)) %>
-            <% end %>
-          </th>
-          <th><%= attendance.business_processing_contents if attendance.business_processing_contents.present? %></th>
-          <th><%= f.select :"#", [["なし"],["申請中"],["承認"],["否認"]]%></th>
-          <th><%= f.check_box :"#", {}, "true", "false" %></th>
-          <th>
-          　<%= link_to "確認", "#", remote: true,class: "btn btn-primary btn-primary" %>
-          </th>
-        </tr>
-      </tbody>
+      <% @attendance.each do |attendance| %>
+        <% css_class = 
+            case %w{日 月 火 水 木 金 土}[attendance.worked_on.wday]
+            when '土'
+              'text-primary'
+            when '日'
+              'text-danger'
+            end
+        %>
+        <tbody>
+          <tr>
+            <th><%= l(attendance.worked_on, format: :short) %></th>
+            <th class="<%= css_class %>">
+              <%= %w{日 月 火 水 木 金 土}[attendance.worked_on.wday] %>
+            </th>
+            <th><%= l(attendance.plan_finished_at, format: :time) if attendance.plan_finished_at.present? %> </th>
+            <th><%= l(user.designated_work_end_time, format: :time) %></th>
+            <th>
+              <% if attendance.plan_finished_at.present?  %>
+               <%= out_over_times = over_working_times(format_basic_info(attendance.plan_finished_at), format_basic_info(user.designated_work_end_time)) %>
+              <% end %>
+            </th>
+            <th><%= attendance.business_processing_contents if attendance.business_processing_contents.present? %></th>
+            <th><%= f.select :"#", [["なし"],["申請中"],["承認"],["否認"]]%></th>
+            <th><%= f.check_box :"#", {}, "true", "false" %></th>
+            <th>
+            　<%= link_to "確認", "#", remote: true,class: "btn btn-primary btn-primary" %>
+            </th>
+          </tr>
+        </tbody>
+      <% end %>
     </table>
-   <% end %>
+  <% end %>
         <table class="center">
           <%= f.submit yield(:button_text), class: "btn btn-block btn-primary btn-#{yield(:class_text)}" %>
         </table>
- <% end %>
+<% end %>
