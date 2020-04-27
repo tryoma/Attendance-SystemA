@@ -22,6 +22,6 @@ module AttendancesHelper
   
   # 終了時間と終了予定時間を受け取り、時間外時間を計算して返します。翌日の場合。
   def next_day_over_working_times(plan_finish, finish)
-    format("%.2f", ((((plan_finish - finish) / 60) + 24)/ 60.0))
+    format("%.2f", (plan_finish.to_i- finish.to_i) + 24.0)
   end
 end
