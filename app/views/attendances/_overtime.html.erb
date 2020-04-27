@@ -10,7 +10,7 @@
       <h1 class="modal-title">残業申請</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @attendance, url: attendances_request_overtime_user_path(date:@day), local: true, method: :patch) do |f| %>
+      <%= form_with(model: @attendance, url: attendances_request_overtime_user_path(@user,date:@day), local: true, method: :patch) do |f| %>
          <table class="table table-bordered">
           <thead>
             <tr>

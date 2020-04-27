@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get 'attendances/overtime'
       patch 'attendances/request_overtime'
       get 'attendances/reply_overtime'
+      patch 'attendances/to_reply_overtime'
     end
     collection { post :import }
     resources :attendances, only: :update

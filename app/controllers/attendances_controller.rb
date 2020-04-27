@@ -50,7 +50,7 @@ class AttendancesController < ApplicationController
   end 
 
   def request_overtime
-    @attendance = Attendance.find_by(worked_on: params[:date])
+    @attendance = Attendance.find_by(worked_on:params[:date],user_id:params[:id])
     if @attendance.update_attributes(overtime_params)
       flash[:success] = "残業申請しました。"
       redirect_to user_url
@@ -64,6 +64,11 @@ class AttendancesController < ApplicationController
     @users = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil})
     @attendance = Attendance.where.not(plan_finished_at: nil)
   end
+  
+  def to_reply_overtime
+    debugger
+  end
+  
 
   private
     # 1ヶ月分の勤怠情報を扱います。
