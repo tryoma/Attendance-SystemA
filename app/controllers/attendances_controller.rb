@@ -1,10 +1,11 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: [:edit_one_month, :update_one_month, :overtime, :reply_overtime]
+  before_action :set_user, only: [:edit_one_month, :update_one_month, :overtime]
   before_action :logged_in_user, only: [:update, :edit_one_month]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month, :overtime]
 
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
+  REPLY_ERROR_MSG = "残業申請返信に失敗しました。やり直してください。"
 
   def update
     @user = User.find(params[:user_id])
@@ -66,7 +67,16 @@ class AttendancesController < ApplicationController
   end
   
   def to_reply_overtime
+    @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil})
     debugger
+    @attendance = Attendance.find(params[:id])
+    debugger
+    if @attendance.update(reply_overtime_params)
+      flash[:success] = "申請に返信しました。"
+    else
+      flash[:danger] = REPLY_ERROR_MSG
+    end
+    redirect_to user_url(current_user)
   end
   
 
@@ -79,6 +89,11 @@ class AttendancesController < ApplicationController
      # 残業申請情報を扱います。
     def overtime_params
       params.require(:attendance).permit(:plan_finished_at, :tomorrow, :business_processing_contents, :instructor_confirmation)
+    end
+    
+    # 残業申請情報を扱います。
+    def reply_overtime_params
+      params.require(:user).permit(attendances: [:mark_instructor_confirmation,:change])[:attendances]
     end
     
     # beforeフィルター

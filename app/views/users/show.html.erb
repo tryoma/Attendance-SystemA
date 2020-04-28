@@ -8,8 +8,8 @@
         <%= link_to "⇨", user_path(date: @first_day.next_month), class: "btn btn-primary" %>
       </td>
       <td colspan="4">
-        指定勤務開始時間：<%= l(@user.designated_work_start_time, format: :time) %><br>
-        指定勤務終了時間：<%= l(@user.designated_work_end_time, format: :time) %>
+        指定勤務開始時間：<%= l(@user.designated_work_start_time, format: :time) if @user.designated_work_start_time.present? %><br>
+        指定勤務終了時間：<%= l(@user.designated_work_end_time, format: :time) if @user.designated_work_end_time.present?%>
       </td>
       <td colspan="2">基本時間：<%= format_basic_info(@user.basic_work_time) %></td>
       <td colspan="2">月初日：<%= l(@first_day, format: :short) %></td>
