@@ -67,17 +67,14 @@ class AttendancesController < ApplicationController
   end
   
   def to_reply_overtime
-    ActiveRecord::Base.transaction do # トランザクションを開始します。
-      reply_overtime_params.each do |id, item|
-        attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
+    reply_overtime_params.each do |id,item|
+      attendance = Attendance.find(id)
+      if params[:user][:attendances][id][:change] == "true"
+        attendance.update_attributes(item)
+        flash[:success] = "残業申請のお知らせを変更しました。"
       end
     end
-    flash[:success] = "残業申請に返信しました。"
-    redirect_to user_url(date: params[:date])
-  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-    flash[:danger] = "無効な入力データがあった為、残業申請をキャンセルしました。"
-    redirect_to attendances_edit_one_month_user_url(date: params[:date])
+      redirect_to user_url(date: params[:date])
   end
   
 
