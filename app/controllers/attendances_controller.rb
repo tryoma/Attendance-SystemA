@@ -67,16 +67,17 @@ class AttendancesController < ApplicationController
   end
   
   def to_reply_overtime
-    @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil})
-    debugger
-    @attendance = Attendance.find(params[:id])
-    debugger
-    if @attendance.update(reply_overtime_params)
-      flash[:success] = "申請に返信しました。"
-    else
-      flash[:danger] = REPLY_ERROR_MSG
+    ActiveRecord::Base.transaction do # トランザクションを開始します。
+      reply_overtime_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+      end
     end
-    redirect_to user_url(current_user)
+    flash[:success] = "残業申請に返信しました。"
+    redirect_to user_url(date: params[:date])
+  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
+    flash[:danger] = "無効な入力データがあった為、残業申請をキャンセルしました。"
+    redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
 
