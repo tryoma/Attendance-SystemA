@@ -27,7 +27,15 @@ class AttendancesController < ApplicationController
     redirect_to @user
   end
 
-  def edit_one_month
+#<!----------勤怠変更申請------------>
+  def edit_one_month #<-----@user,@first_day,`last_day,one_month,@attendances
+  end
+  
+  def request_edit_one_month
+  end
+  
+  def reply_edit_one_month
+    @user = "田中"
   end
 
   def update_one_month
@@ -44,6 +52,7 @@ class AttendancesController < ApplicationController
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
+#<!----------残業申請------------>
   def overtime
     @day = Date.parse(params[:date])
     @youbi = %w(日 月 火 水 木 金 土)[@day.wday]
@@ -76,6 +85,9 @@ class AttendancesController < ApplicationController
     end
       redirect_to user_url(date: params[:date])
   end
+  
+#<!----------所属長承認申請------------>
+
   
 
   private
