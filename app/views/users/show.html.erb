@@ -27,9 +27,24 @@
 </div>
 
 <div id="infomation_explanation">
-  <%= link_to "【所属長承認申請のお知らせ】", "#" %><br>
-  <%= link_to "【勤怠変更申請のお知らせ】", "#" %><br>
-  <%= link_to "【残業申請のお知らせ】", attendances_reply_overtime_user_path %>
+  <p>
+    【所属長承認申請のお知らせ】
+    <span class="kakomi-box1">
+      <%= link_to "#{ @count1 }件の通知があります", "#" %>
+    </span>
+  </p>
+  <p>
+    【勤怠変更申請のお知らせ】
+    <span class="kakomi-box1">
+      <%= link_to "#{ @count1 }件の通知があります", "#" %>
+    </span>
+  </p>
+  <p>
+    【残業申請のお知らせ】
+    <span class="kakomi-box1">
+      <%= link_to "#{ @count1 }件の通知があります", attendances_reply_overtime_user_path %>
+    </span>
+  </p>
 </div>
 
 <div class="btn-users-show">

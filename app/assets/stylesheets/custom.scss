@@ -131,8 +131,20 @@ p {
 
 /* infomation_messages */
 
+
+/* 追加 */
+/* show画面 */
 #infomation_explanation {
-  　font-size: 30px;
-    color: red;
-    margin: 0 0 30px 0;
+  margin: 0 0 10px 0;
+  p {
+    font-size: 20px;
+    color: #000000;
+    padding: auto;
+    line-height: 25px;
+  }
+}
+
+.kakomi-box1 {
+  color: #ff0000;
+  border: 2px solid #ff0000; /* 枠線 */
   }
