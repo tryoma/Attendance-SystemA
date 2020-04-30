@@ -30,19 +30,19 @@
   <p>
     【所属長承認申請のお知らせ】
     <span class="kakomi-box1">
-      <%= link_to "#{ @count1 }件の通知があります", "#" %>
+      <%= link_to "#{ @count1 }件の通知があります", "#" , :style=>"color:red;"%>
     </span>
   </p>
   <p>
     【勤怠変更申請のお知らせ】
     <span class="kakomi-box1">
-      <%= link_to "#{ @count1 }件の通知があります", attendances_reply_edit_one_month_user_path %>
+      <%= link_to "#{ @count1 }件の通知があります", attendances_reply_edit_one_month_user_path , :style=>"color:red;"%>
     </span>
   </p>
   <p>
     【残業申請のお知らせ】
     <span class="kakomi-box1">
-      <%= link_to "#{ @count1 }件の通知があります", attendances_reply_overtime_user_path %>
+      <%= link_to "#{ @count1 }件の通知があります", attendances_reply_overtime_user_path , :style=>"color:red;"%>
     </span>
   </p>
 </div>
