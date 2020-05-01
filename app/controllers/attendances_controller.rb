@@ -35,7 +35,6 @@ class AttendancesController < ApplicationController
   end
   
   def reply_edit_one_month
-    @user = "田中"
   end
 
   def update_one_month
