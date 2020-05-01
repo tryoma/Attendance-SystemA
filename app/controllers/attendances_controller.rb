@@ -103,7 +103,7 @@ class AttendancesController < ApplicationController
     
     # 残業申請情報を扱います。
     def reply_overtime_params
-      params.require(:user).permit(attendances: [:mark_instructor_confirmation,:change])[:attendances]
+      params.require(:user).permit(attendances: [:mark_instructor_confirmation])[:attendances]
     end
     
     # beforeフィルター
