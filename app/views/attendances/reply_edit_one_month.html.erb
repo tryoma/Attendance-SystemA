@@ -1,7 +1,9 @@
 <% provide(:class_text, 'edit_one_month') %>
 <% provide(:button_text, '変更を送信する。') %>
 
-  <h1>【からの残業申請】</h1>
+<%= form_with(model: @user, url: attendances_update_one_month_user_path, local: true, method: :patch) do |f| %>
+  <% @user.each do |user| %>
+    <h1>【からの勤怠変更申請】</h1>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -31,4 +33,44 @@
           <th rowspan="1">分</th>
         </tr>
       </thead>
+      <% @attendances_notice = Attendance.where(user_id: user.id).where.not(kintai_change_instructor_confirmation: nil) %>
+      <% @attendances_notice.each do |notice| %>
+        <%= f.fields_for "attendances[]", notice do |attendance| %>
+          <% css_class = 
+              case %w{日 月 火 水 木 金 土}[notice.worked_on.wday]
+              when '土'
+                'text-primary'
+              when '日'
+                'text-danger'
+              end
+          %>
+          <tbody>
+            <tr>
+              <th><%= l(notice.worked_on, format: :short) %></th>
+              <th class="<%= css_class %>">
+                <%= %w{日 月 火 水 木 金 土}[notice.worked_on.wday] %>
+              </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th><%= attendance.check_box :change, {class: "change"}, 'true', 'false' %></th>
+              <th>
+              　<%= link_to "確認", "#", remote: true, class: "btn btn-primary btn-primary" %>
+              </th>
+            </tr>
+          </tbody>
+        <% end %>
+      <% end %>
     </table>
+  <% end %>
+        <table class="center">
+          <%= f.submit yield(:button_text), class: "btn btn-block btn-primary btn-#{yield(:class_text)}" %>
+        </table>
+<% end %>

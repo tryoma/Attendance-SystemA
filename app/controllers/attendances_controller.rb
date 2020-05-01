@@ -32,9 +32,17 @@ class AttendancesController < ApplicationController
   end
   
   def request_edit_one_month
+    edit_one_month_params.each do |id,item|
+      attendance = Attendance.find(id)
+      attendance.update_attributes(item)
+      flash[:success] = "残業申請のお知らせを変更しました。"
+    end
+      redirect_to user_url(date: params[:date])
   end
   
   def reply_edit_one_month
+    @user = User.joins(:attendances).group("user_id").where.not(attendances: {kintai_change_instructor_confirmation: nil})
+    @attendance = Attendance.where.not(kintai_change_instructor_confirmation: nil)
   end
 
   def update_one_month
@@ -103,6 +111,11 @@ class AttendancesController < ApplicationController
     # 残業申請情報を扱います。
     def reply_overtime_params
       params.require(:user).permit(attendances: [:mark_instructor_confirmation])[:attendances]
+    end
+    
+    # 残業申請情報を扱います。
+    def edit_one_month_params
+      params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :kintai_change_instructor_confirmation])[:attendances]
     end
     
     # beforeフィルター

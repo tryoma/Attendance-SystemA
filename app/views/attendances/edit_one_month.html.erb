@@ -38,14 +38,14 @@
                 <td><%= attendance.time_field :started_at, class: "form-control" %></td>
                 <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
               <% end %>
-              <td><%= attendance.check_box :change, {class: "change"}, 'true', 'false' %></td>
+              <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
               <td>
                 <% if day.started_at.present? && day.finished_at.present? %>
                   <%= working_times(day.started_at, day.finished_at) %>
                 <% end %>
               </td>
               <td><%= attendance.text_field :note, class: "form-control" %></td>
-              <td><%= attendance.select :note, [["上長A"],["上長B"]]%></td>
+              <td><%= attendance.select :kintai_change_instructor_confirmation, [["上長A"],["上長B"]]%></td>
             </tr>
           <% end %>
         <% end %>
