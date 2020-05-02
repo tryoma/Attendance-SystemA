@@ -41,8 +41,8 @@ class AttendancesController < ApplicationController
   end
   
   def reply_edit_one_month
-    @user = User.joins(:attendances).group("user_id").where.not(attendances: {kintai_change_instructor_confirmation: nil})
-    @attendance = Attendance.where.not(kintai_change_instructor_confirmation: nil)
+    @user = User.joins(:attendances).group("user_id").where.not(attendances: {kintai_change_instructor_confirmation: "選択してください"})
+    @attendance = Attendance.where.not(kintai_change_instructor_confirmation: "選択してください")
   end
 
   def update_one_month
