@@ -35,7 +35,7 @@ class AttendancesController < ApplicationController
     edit_one_month_params.each do |id,item|
       attendance = Attendance.find(id)
       attendance.update_attributes(item)
-      flash[:success] = "残業申請のお知らせを変更しました。"
+      flash[:success] = "残業申請を行いました。"
     end
       redirect_to user_url(date: params[:date])
   end
