@@ -32,7 +32,7 @@
                 <%= $days_of_the_week[day.worked_on.wday] %></td>
               </td>
               <% if !current_user.admin? && (Date.current < day.worked_on) %>
-                <td><%= attendance.time_field :started_at, readonly: true, class: "form-control" %></td>
+                <td><%= attendance.time_select :applying_started_at,default:day.started_at readonly: true, class: "form-control" %></td>
                 <td><%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>
               <% else %>
                 <td><%= attendance.time_field :started_at, class: "form-control" %></td>
@@ -45,7 +45,7 @@
                 <% end %>
               </td>
               <td><%= attendance.text_field :note, class: "form-control" %></td>
-              <td><%= attendance.select :kintai_change_instructor_confirmation, [["選択してください"],["上長A"],["上長B"]]%></td>
+              <td>vie</td>
             </tr>
           <% end %>
         <% end %>
