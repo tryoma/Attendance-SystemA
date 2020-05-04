@@ -36,7 +36,7 @@ User.create!(name: "一般社員A",
              admin: false,
              superior: false)
              
-User.create!(name: "一般社員A",
+User.create!(name: "一般社員B",
              email: "general2@email.com",
              affiliation: "人事部",
              employee_number: "4",
