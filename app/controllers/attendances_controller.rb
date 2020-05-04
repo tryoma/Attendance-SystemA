@@ -115,7 +115,7 @@ class AttendancesController < ApplicationController
     
     # 残業申請情報を扱います。
     def edit_one_month_params
-      params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :kintai_change_instructor_confirmation])[:attendances]
+      params.require(:user).permit(attendances: [:applying_started_at, :applying_finished_at, :note, :kintai_change_instructor_confirmation])[:attendances]
     end
     
     # beforeフィルター

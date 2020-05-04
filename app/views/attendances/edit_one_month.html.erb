@@ -34,11 +34,11 @@
               <% if !current_user.admin? && (Date.current < day.worked_on) %>
                 <td><%= attendance.time_select :applying_started_at, disabled: true, prompt:"--" , class: "form-control" %></td>
                 <td><%= attendance.time_select :applying_finished_at, disabled: true, prompt:"--" , class: "form-control" %></td>
-                <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
+                <td><%= attendance.check_box :tomorrow, {disabled: true}, 'true', 'false'%></td>
               <% else %>
                 <% if day.started_at.present? %>
-                  <td><%= attendance.time_select :applying_started_at, default: day.started_at.floor_to(15.minutes), class: "form-control" %></td>
-                  <td><%= attendance.time_select :applying_finished_at, default: day.finished_at.floor_to(15.minutes), class: "form-control" %></td>
+                  <td><%= attendance.time_select :applying_started_at, default: day.started_at.floor_to(15.minutes), ignore_data:true, class: "form-control" %></td>
+                  <td><%= attendance.time_select :applying_finished_at, default: day.finished_at.floor_to(15.minutes), ignore_data:true, class: "form-control" %></td>
                   <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
                 <% else %>
                   <td><%= attendance.time_select :applying_started_at, prompt:"--" , class: "form-control" %></td>
@@ -51,15 +51,13 @@
                   <%= working_times(day.started_at, day.finished_at) %>
                 <% end %>
               </td>
-              <td>
-                <% if !current_user.admin? && (Date.current < day.worked_on) %>
-                  <%= attendance.text_field :note, disabled: true ,class: "form-control" %>
-                <% else %>
-                  <%= attendance.text_field :note,class: "form-control" %>
-                <% end %>
-              <td>
-                <%= link_to "確認", "#", remote: true, class: "btn btn-primary btn-primary" %>
-              </td>
+              <% if !current_user.admin? && (Date.current < day.worked_on) %>
+                <td><%= attendance.text_field :note, disabled: true ,class: "form-control" %></td>
+                <td><%= attendance.select :kintai_change_instructor_confirmation, ["選択してください"] %></td>
+              <% else %>
+                <td><%= attendance.text_field :note,class: "form-control" %></td>
+                <td><%= attendance.select :kintai_change_instructor_confirmation, [["選択してください"],["上長A"],["上長B"]] %></td>
+              <% end %>
             </tr>
           <% end %>
         <% end %>
