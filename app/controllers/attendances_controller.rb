@@ -41,22 +41,20 @@ class AttendancesController < ApplicationController
   end
   
   def reply_edit_one_month
-    @user = User.joins(:attendances).group("user_id").where.not(attendances: {kintai_change_instructor_confirmation: "選択してください"})
-    @attendance = Attendance.where.not(kintai_change_instructor_confirmation: "選択してください")
+    @user = User.joins(:attendances).group("user_id").where.not(attendances: {kintai_change_instructor_confirmation: "選択してください" })
+    @attendance = Attendance.where.not(kintai_change_instructor_confirmation: "選択してください").where.not(mark_kintai_change_instructor_confirmation: "承認")
+    debugger
   end
 
   def update_one_month
-    ActiveRecord::Base.transaction do # トランザクションを開始します。
       attendances_params.each do |id, item|
         attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
+        if params[:user][:attendances][id][:change] == "true"
+        attendance.update_attributes(item)
+        end
       end
-    end
-    flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
+    flash[:success] = "勤怠変更を承認しました。"
     redirect_to user_url(date: params[:date])
-  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-    redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
 #<!----------残業申請------------>
@@ -100,7 +98,7 @@ class AttendancesController < ApplicationController
   private
     # 1ヶ月分の勤怠情報を扱います。
     def attendances_params
-      params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
+      params.require(:user).permit(attendances: [:mark_kintai_change_instructor_confirmation])[:attendances]
     end
     
      # 残業申請情報を扱います。

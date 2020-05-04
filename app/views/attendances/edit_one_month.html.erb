@@ -32,17 +32,17 @@
                 <%= $days_of_the_week[day.worked_on.wday] %></td>
               </td>
               <% if !current_user.admin? && (Date.current < day.worked_on) %>
-                <td><%= attendance.time_select :applying_started_at, disabled: true, prompt:"--" , class: "form-control" %></td>
-                <td><%= attendance.time_select :applying_finished_at, disabled: true, prompt:"--" , class: "form-control" %></td>
+                <td><%= attendance.time_field :applying_started_at, disabled: true, prompt:"--" , class: "form-control" %></td>
+                <td><%= attendance.time_field :applying_finished_at, disabled: true, prompt:"--" , class: "form-control" %></td>
                 <td><%= attendance.check_box :tomorrow, {disabled: true}, 'true', 'false'%></td>
               <% else %>
                 <% if day.started_at.present? %>
-                  <td><%= attendance.time_select :applying_started_at, default: day.started_at.floor_to(15.minutes), ignore_data:true, class: "form-control" %></td>
-                  <td><%= attendance.time_select :applying_finished_at, default: day.finished_at.floor_to(15.minutes), ignore_data:true, class: "form-control" %></td>
+                  <td><%= attendance.time_field :applying_started_at, class: "form-control" %></td>
+                  <td><%= attendance.time_field :applying_finished_at, class: "form-control" %></td>
                   <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
                 <% else %>
-                  <td><%= attendance.time_select :applying_started_at, prompt:"--" , class: "form-control" %></td>
-                  <td><%= attendance.time_select :applying_finished_at,  prompt:"--" , class: "form-control" %></td>
+                  <td><%= attendance.time_field :applying_started_at, prompt:"--" , class: "form-control" %></td>
+                  <td><%= attendance.time_field :applying_finished_at,  prompt:"--" , class: "form-control" %></td>
                   <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
                 <% end %>
               <% end %>
