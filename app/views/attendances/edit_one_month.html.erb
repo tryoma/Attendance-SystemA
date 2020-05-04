@@ -32,20 +32,34 @@
                 <%= $days_of_the_week[day.worked_on.wday] %></td>
               </td>
               <% if !current_user.admin? && (Date.current < day.worked_on) %>
-                <td><%= attendance.time_select :applying_started_at,default:day.started_at readonly: true, class: "form-control" %></td>
-                <td><%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>
+                <td><%= attendance.time_select :applying_started_at, disabled: true, prompt:"--" , class: "form-control" %></td>
+                <td><%= attendance.time_select :applying_finished_at, disabled: true, prompt:"--" , class: "form-control" %></td>
+                <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
               <% else %>
-                <td><%= attendance.time_field :started_at, class: "form-control" %></td>
-                <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
+                <% if day.started_at.present? %>
+                  <td><%= attendance.time_select :applying_started_at, default: day.started_at.floor_to(15.minutes), class: "form-control" %></td>
+                  <td><%= attendance.time_select :applying_finished_at, default: day.finished_at.floor_to(15.minutes), class: "form-control" %></td>
+                  <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
+                <% else %>
+                  <td><%= attendance.time_select :applying_started_at, prompt:"--" , class: "form-control" %></td>
+                  <td><%= attendance.time_select :applying_finished_at,  prompt:"--" , class: "form-control" %></td>
+                  <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
+                <% end %>
               <% end %>
-              <td><%= attendance.check_box :tomorrow, {class: "change"}, 'true', 'false' %></td>
               <td>
                 <% if day.started_at.present? && day.finished_at.present? %>
                   <%= working_times(day.started_at, day.finished_at) %>
                 <% end %>
               </td>
-              <td><%= attendance.text_field :note, class: "form-control" %></td>
-              <td>vie</td>
+              <td>
+                <% if !current_user.admin? && (Date.current < day.worked_on) %>
+                  <%= attendance.text_field :note, disabled: true ,class: "form-control" %>
+                <% else %>
+                  <%= attendance.text_field :note,class: "form-control" %>
+                <% end %>
+              <td>
+                <%= link_to "確認", "#", remote: true, class: "btn btn-primary btn-primary" %>
+              </td>
             </tr>
           <% end %>
         <% end %>
