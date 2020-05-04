@@ -33,7 +33,7 @@
           <th rowspan="1">分</th>
         </tr>
       </thead>
-      <% @attendances_notice = Attendance.where(user_id: user.id).where.not(mark_kintai_change_instructor_confirmation:"承認") %>
+      <% @attendances_notice = Attendance.where(user_id: user.id).where.not(kintai_change_instructor_confirmation:"選択してください",mark_kintai_change_instructor_confirmation:"承認") %>
       <% @attendances_notice.each do |notice| %>
         <%= f.fields_for "attendances[]", notice do |attendance| %>
           <% css_class = 
@@ -50,14 +50,14 @@
               <th class="<%= css_class %>">
                 <%= %w{日 月 火 水 木 金 土}[notice.worked_on.wday] %>
               </th>
-              <th><%= l(notice.applying_started_at, format: :th) if notice.applying_started_at.present? %></th>
-              <th><%= l(notice.applying_started_at.floor_to(15.minutes), format: :tm) if notice.applying_started_at.present? %></th>
-              <th><%= l(notice.applying_finished_at, format: :th) if notice.applying_finished_at.present? %></th>
-              <th><%= l(notice.applying_finished_at.floor_to(15.minutes), format: :tm) if notice.applying_finished_at.present? %></th>
               <th><%= l(notice.started_at, format: :th) if notice.started_at.present? %></th>
               <th><%= l(notice.started_at.floor_to(15.minutes), format: :tm) if notice.started_at.present? %></th>
               <th><%= l(notice.finished_at, format: :th) if notice.finished_at.present? %></th>
               <th><%= l(notice.finished_at.floor_to(15.minutes), format: :tm) if notice.finished_at.present? %></th>
+              <th><%= l(notice.applying_started_at, format: :th) if notice.applying_started_at.present? %></th>
+              <th><%= l(notice.applying_started_at.floor_to(15.minutes), format: :tm) if notice.applying_started_at.present? %></th>
+              <th><%= l(notice.applying_finished_at, format: :th) if notice.applying_finished_at.present? %></th>
+              <th><%= l(notice.applying_finished_at.floor_to(15.minutes), format: :tm) if notice.applying_finished_at.present? %></th>
               <th><%= notice.note %></th>
               <th><%= attendance.select :mark_kintai_change_instructor_confirmation, [["なし"],["申請中"],["承認"],["否認"]]%></th>
               <th><%= attendance.check_box :change, {class: "change"}, 'true', 'false' %></th>

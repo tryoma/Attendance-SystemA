@@ -50,6 +50,9 @@ class AttendancesController < ApplicationController
         attendance = Attendance.find(id)
         if params[:user][:attendances][id][:change] == "true"
         attendance.update_attributes(item)
+        attendance.started_at = attendance.applying_started_at
+        attendance.finished_at = attendance.applying_finished_at
+        debugger
         end
       end
     flash[:success] = "勤怠変更を承認しました。"

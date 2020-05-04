@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20200504014307) do
     t.string "mark_instructor_confirmation", default: "なし"
     t.boolean "change"
     t.string "kintai_change_instructor_confirmation", default: "選択してください"
-    t.string "mark_kintai_change_instructor_confirmation", default: "なし"
+    t.string "mark_kintai_change_instructor_confirmation"
     t.datetime "applying_started_at"
     t.datetime "applying_finished_at"
     t.index ["user_id"], name: "index_attendances_on_user_id"

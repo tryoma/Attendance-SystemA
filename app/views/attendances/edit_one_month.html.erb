@@ -53,10 +53,10 @@
               </td>
               <% if !current_user.admin? && (Date.current < day.worked_on) %>
                 <td><%= attendance.text_field :note, disabled: true ,class: "form-control" %></td>
-                <td><%= attendance.select :kintai_change_instructor_confirmation, ["選択してください"] %></td>
+                <td><%= attendance.select :kintai_change_instructor_confirmation, [""] %></td>
               <% else %>
                 <td><%= attendance.text_field :note,class: "form-control" %></td>
-                <td><%= attendance.select :kintai_change_instructor_confirmation, [["選択してください"],["上長A"],["上長B"]] %></td>
+                <td><%= attendance.select :kintai_change_instructor_confirmation, [[""],["上長A"],["上長B"]] %></td>
               <% end %>
             </tr>
           <% end %>
