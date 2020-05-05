@@ -33,7 +33,7 @@
           <th rowspan="1">分</th>
         </tr>
       </thead>
-      <% @attendances_notice = Attendance.where(user_id: user.id).where.not(kintai_change_instructor_confirmation:"選択してください",mark_kintai_change_instructor_confirmation:"承認") %>
+      <% @attendances_notice = Attendance.where(user_id: user.id).where(kintai_to_who: "上長A").where.not(mark_kintai_change_instructor_confirmation: "承認") %>
       <% @attendances_notice.each do |notice| %>
         <%= f.fields_for "attendances[]", notice do |attendance| %>
           <% css_class = 

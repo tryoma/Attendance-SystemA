@@ -34,25 +34,32 @@ class AttendancesController < ApplicationController
   def request_edit_one_month
     edit_one_month_params.each do |id,item|
       attendance = Attendance.find(id)
-      attendance.update_attributes(item)
-      flash[:success] = "残業申請を行いました。"
+      if params[:user][:attendances][id][:kintai_change_instructor_confirmation].present?
+        attendance.update_attributes(item)
+        attendance.update(kintai_to_who: params[:user][:attendances][id][:kintai_change_instructor_confirmation])
+        if attendance.mark_kintai_change_instructor_confirmation == "承認"
+          attendance.update(mark_kintai_change_instructor_confirmation: "申請中")
+        end
+        flash[:success] = "勤怠変更申請を行いました。"
+      end
     end
       redirect_to user_url(date: params[:date])
   end
   
   def reply_edit_one_month
-    @user = User.joins(:attendances).group("user_id").where.not(attendances: {kintai_change_instructor_confirmation: "選択してください" })
-    @attendance = Attendance.where.not(kintai_change_instructor_confirmation: "選択してください")
+    @user = User.joins(:attendances).group("user_id").where(attendances: {kintai_to_who: "上長A"})
+    @attendance = Attendance.where(kintai_to_who: "上長A")
   end
 
   def update_one_month
       attendances_params.each do |id, item|
         attendance = Attendance.find(id)
         if params[:user][:attendances][id][:change] == "true"
-        attendance.update_attributes(item)
-        attendance.started_at = attendance.applying_started_at
-        attendance.finished_at = attendance.applying_finished_at
-        debugger
+          if params[:user][:attendances]["1"][:mark_kintai_change_instructor_confirmation] == "承認"
+            attendance.update_attributes(item)
+            attendance.update(started_at: attendance.applying_started_at)
+            attendance.update(finished_at: attendance.applying_finished_at)
+          end
         end
       end
     flash[:success] = "勤怠変更を承認しました。"
@@ -115,7 +122,7 @@ class AttendancesController < ApplicationController
     
     # 残業申請情報を扱います。
     def edit_one_month_params
-      params.require(:user).permit(attendances: [:applying_started_at, :applying_finished_at, :note, :kintai_change_instructor_confirmation])[:attendances]
+      params.require(:user).permit(attendances: [:applying_started_at, :applying_finished_at, :note, :kintai_tomorrow])[:attendances]
     end
     
     # beforeフィルター

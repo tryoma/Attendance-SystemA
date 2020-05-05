@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200504014307) do
+ActiveRecord::Schema.define(version: 20200505055906) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -26,10 +26,12 @@ ActiveRecord::Schema.define(version: 20200504014307) do
     t.boolean "tomorrow"
     t.string "mark_instructor_confirmation", default: "なし"
     t.boolean "change"
-    t.string "kintai_change_instructor_confirmation", default: "選択してください"
-    t.string "mark_kintai_change_instructor_confirmation"
+    t.string "kintai_change_instructor_confirmation", default: " "
+    t.string "mark_kintai_change_instructor_confirmation", default: "申請中"
     t.datetime "applying_started_at"
     t.datetime "applying_finished_at"
+    t.string "kintai_to_who", default: " "
+    t.boolean "kintai_tomorrow"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
@@ -51,9 +53,9 @@ ActiveRecord::Schema.define(version: 20200504014307) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "affiliation"
-    t.datetime "basic_work_time", default: "2020-05-03 23:00:00"
-    t.datetime "designated_work_start_time", default: "2020-05-04 00:00:00"
-    t.datetime "designated_work_end_time", default: "2020-05-04 09:00:00"
+    t.datetime "basic_work_time", default: "2020-05-04 23:00:00"
+    t.datetime "designated_work_start_time", default: "2020-05-05 00:00:00"
+    t.datetime "designated_work_end_time", default: "2020-05-05 09:00:00"
     t.string "uid"
     t.integer "employee_number"
     t.boolean "superior", default: false
