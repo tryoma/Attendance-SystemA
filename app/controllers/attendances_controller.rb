@@ -55,7 +55,7 @@ class AttendancesController < ApplicationController
       attendances_params.each do |id, item|
         attendance = Attendance.find(id)
         if params[:user][:attendances][id][:change] == "true"
-          if params[:user][:attendances]["1"][:mark_kintai_change_instructor_confirmation] == "承認"
+          if params[:user][:attendances][id][:mark_kintai_change_instructor_confirmation] == "承認"
             attendance.update_attributes(item)
             attendance.update(started_at: attendance.applying_started_at)
             attendance.update(finished_at: attendance.applying_finished_at)
