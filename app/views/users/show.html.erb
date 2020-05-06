@@ -125,7 +125,7 @@
             <% end %>
           </td>
           <td>
-            <% unless day.mark_kintai_change_instructor_confirmation == "否認" %>
+            <% if day.started_at.present? && day.finished_at.present? %>
               <%= day.note %>
             <% end %>
           </td>
