@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200505055906) do
+ActiveRecord::Schema.define(version: 20200506121428) do
+
+  create_table "applies", force: :cascade do |t|
+    t.date "month"
+    t.string "month_instructor_confirmation", default: "選択してください"
+    t.string "month_to_who"
+    t.string "mark_month_instructor_confirmation", default: "申請中"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_applies_on_user_id"
+  end
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"

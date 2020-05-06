@@ -24,17 +24,20 @@ ja:
           note: 備考
           plan_finished_at: 終了予定時間
           business_processing_contents: 業務処理内容
-          instructor_confirmation: 指示者確認
-          mark_instructor_confirmation: 指示者確認印
+          instructor_confirmation: 指示者確認(残業申請)
+          mark_instructor_confirmation: 指示者確認印(残業申請)
           user: ユーザーID 
           applying_started_at: 出勤時間(変更後)
           applying_finished_at: 退勤時間(変更後)
           change: 変更
           kintai_change_instructor_confirmation: 指示者確認(勤怠変更)
           mark_kintai_change_instructor_confirmation: 指示者確認(勤怠変更)
-          
         base:
           base_number: 拠点番号
           base_name: 拠点名
           base_type: 勤怠種類
+        apply:
+          month: 月
+          month_instructor_confirmation: 指示者確認(月次承認)
+          mark_month_instructor_confirmation: 勤怠種類(月次承認)
           
