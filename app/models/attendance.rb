@@ -21,7 +21,9 @@ class Attendance < ApplicationRecord
 
   def applying_started_at_than_applying_finished_at_fast_if_invalid
     if applying_started_at.present? && applying_finished_at.present?
-      errors.add(:applying_started_at, "より早い退勤時間は無効です") if applying_started_at > applying_finished_at
+      if kintai_tomorrow == "false"
+        errors.add(:applying_started_at, "より早い退勤時間(変更後)は無効です") if applying_started_at > applying_finished_at
+      end
     end
   end
   

@@ -32,18 +32,25 @@ class AttendancesController < ApplicationController
   end
   
   def request_edit_one_month
-    edit_one_month_params.each do |id,item|
-      attendance = Attendance.find(id)
-      if params[:user][:attendances][id][:kintai_change_instructor_confirmation].present?
-        attendance.update_attributes(item)
-        attendance.update(kintai_to_who: params[:user][:attendances][id][:kintai_change_instructor_confirmation])
-        if attendance.mark_kintai_change_instructor_confirmation == "承認"
-          attendance.update(mark_kintai_change_instructor_confirmation: "申請中")
+    ActiveRecord::Base.transaction do # トランザクションを開始します。
+      edit_one_month_params.each do |id,item|
+        attendance = Attendance.find(id)
+        if params[:user][:attendances][id][:kintai_change_instructor_confirmation].present?
+          attendance.update_attributes!(item)
+          attendance.update(kintai_to_who: params[:user][:attendances][id][:kintai_change_instructor_confirmation])
+          if attendance.mark_kintai_change_instructor_confirmation == "承認"
+            attendance.update(mark_kintai_change_instructor_confirmation: "申請中")
+          elsif attendance.mark_kintai_change_instructor_confirmation == "否認"
+            attendance.update(mark_kintai_change_instructor_confirmation: "申請中")
+          end
         end
-        flash[:success] = "勤怠変更申請を行いました。"
       end
     end
-      redirect_to user_url(date: params[:date])
+    flash[:success] = "勤怠変更申請を行いました。"
+    redirect_to user_url(date: params[:date])
+  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
+    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
   def reply_edit_one_month
@@ -57,12 +64,13 @@ class AttendancesController < ApplicationController
         if params[:user][:attendances][id][:change] == "true"
           if params[:user][:attendances][id][:mark_kintai_change_instructor_confirmation] == "承認"
             attendance.update_attributes(item)
-            attendance.update(started_at: attendance.applying_started_at)
-            attendance.update(finished_at: attendance.applying_finished_at)
+            attendance.update(started_at: attendance.applying_started_at, finished_at: attendance.applying_finished_at)
+          elsif params[:user][:attendances][id][:mark_kintai_change_instructor_confirmation] == "否認"
+            attendance.update_attributes(item)
           end
         end
       end
-    flash[:success] = "勤怠変更を承認しました。"
+    flash[:success] = "変更にチェックのあった申請の勤怠変更をしました。"
     redirect_to user_url(date: params[:date])
   end
   

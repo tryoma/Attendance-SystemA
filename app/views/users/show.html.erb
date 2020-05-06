@@ -124,7 +124,11 @@
               <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
             <% end %>
           </td>
-          <td><%= day.note %></td>
+          <td>
+            <% unless day.mark_kintai_change_instructor_confirmation == "否認" %>
+              <%= day.note %>
+            <% end %>
+          </td>
           <td><%= l(day.plan_finished_at, format: :th) if day.plan_finished_at.present? %> </td>
           <td><%= l(day.plan_finished_at.floor_to(15.minutes), format: :tm) if day.plan_finished_at.present? %> </td>
           <td>
