@@ -112,6 +112,15 @@ class AttendancesController < ApplicationController
 
   
 
+  
+  
+  
+#<!----------勤怠確認参照------------>
+  def reference
+  end
+  
+  
+  
   private
     # 1ヶ月分の勤怠情報を扱います。
     def attendances_params
