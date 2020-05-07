@@ -51,4 +51,24 @@ class ApplicationController < ActionController::Base
     flash[:danger] = "ページ情報の取得に失敗しました、再アクセスしてください。"
     redirect_to root_url
   end
+  
+  def set_month
+    @first_month = params[:date].nil? ?
+    Date.current.beginning_of_year.month : params[:date].month
+    @last_month = Date.current.end_of_year.month
+    one_year = [*@first_month..@last_month]
+    
+    @applies = @user.applies.where(month: @first_month..@last_month).order(:month)
+    debugger
+    unless one_year.count == @applies.count
+      ActiveRecord::Base.transaction do
+        one_year.each { |mon| @user.applies.create!(month: mon) }
+      end
+      @applies = @user.applies.where(month: @first_month..@last_month).order(:month)
+    end
+  
+  rescue ActiveRecord::RecordInvalid
+    flash[:danger] = "ページ情報の取得に失敗しました、再アクセスしてください。"
+    redirect_to user_url
+  end
 end
