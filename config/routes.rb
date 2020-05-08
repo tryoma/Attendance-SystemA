@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       patch 'attendances/request_overtime'
       get 'attendances/reply_overtime' #残業申請確認ページ(上長)
       patch 'attendances/to_reply_overtime'
+      get 'applies/reply_month'
+      patch 'applies/to_reply_month'
     end
     collection { post :import }
     resources :attendances, only: :update

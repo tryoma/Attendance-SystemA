@@ -59,7 +59,6 @@ class ApplicationController < ActionController::Base
     one_year = [*@first_month..@last_month]
     
     @applies = @user.applies.where(month: @first_month..@last_month).order(:month)
-    debugger
     unless one_year.count == @applies.count
       ActiveRecord::Base.transaction do
         one_year.each { |mon| @user.applies.create!(month: mon) }

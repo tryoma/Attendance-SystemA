@@ -30,7 +30,7 @@
   <p>
     【所属長承認申請のお知らせ】
     <span class="kakomi-box1">
-      <%= link_to "#{ @count1 }件の通知があります", "#" , :style=>"color:red;"%>
+      <%= link_to "#{ @count1 }件の通知があります", applies_reply_month_user_path , :style=>"color:red;"%>
     </span>
   </p>
   <p>
@@ -151,7 +151,7 @@
         <td colspan="5"></td>
         <td colspan="1">
           所属長承認<br>
-          <%= form_with(model: @apply, url:user_apply_path(@user,@first_day.month), local: true, method: :patch) do |f| %>
+          <%= form_with(model: @apply, url:user_apply_path(@user,date:@first_day), local: true, method: :patch) do |f| %>
             <%= f.select :month_instructor_confirmation, [["選択してください"],["上長A"],["上長B"]]%>
             <%= f.submit "申請", class: "btn btn-block btn-primary" %>
           <% end %>
