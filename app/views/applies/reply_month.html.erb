@@ -1,6 +1,6 @@
 <% provide(:button_text, '変更を送信する') %>
 
-<%= form_with(model: @user, url: applies_reply_month_user_path, local: true, method: :patch) do |f| %>
+<%= form_with(model: @user, url: applies_to_reply_month_user_path, local: true, method: :patch) do |f| %>
   <% @user.each do |user| %>
     <h1>【<%= user.name %>からの月次申請】</h1>
     <table class="table table-bordered ">
