@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200508121039) do
+ActiveRecord::Schema.define(version: 20200509113907) do
 
   create_table "applies", force: :cascade do |t|
     t.date "month"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20200508121039) do
     t.string "business_processing_contents"
     t.string "instructor_confirmation", default: "選択してください"
     t.boolean "tomorrow"
-    t.string "mark_instructor_confirmation", default: "なし"
+    t.string "mark_instructor_confirmation", default: "申請中"
     t.boolean "change"
     t.string "kintai_change_instructor_confirmation", default: " "
     t.string "mark_kintai_change_instructor_confirmation", default: "申請中"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20200508121039) do
     t.datetime "applying_finished_at"
     t.string "kintai_to_who", default: " "
     t.boolean "kintai_tomorrow"
+    t.string "zangyou_to_who", default: " "
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
