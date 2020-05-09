@@ -98,8 +98,8 @@ class AttendancesController < ApplicationController
   end
   
   def reply_overtime
-    @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil})
-    @attendance = Attendance.where.not(plan_finished_at: nil)
+    @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil}).where(attendances: {mark_instructor_confirmation: "申請中"})
+    @attendance = Attendance.where.not(plan_finished_at: nil).where(mark_instructor_confirmation: "申請中")
   end
   
   def to_reply_overtime
