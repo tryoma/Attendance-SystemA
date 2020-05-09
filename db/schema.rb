@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20200508121039) do
   create_table "applies", force: :cascade do |t|
     t.date "month"
     t.string "month_instructor_confirmation", default: "選択してください"
-    t.string "month_to_who"
+    t.string "month_to_who", default: " "
     t.string "mark_month_instructor_confirmation", default: "申請中"
     t.integer "user_id"
     t.datetime "created_at", null: false

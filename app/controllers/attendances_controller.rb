@@ -54,8 +54,8 @@ class AttendancesController < ApplicationController
   end
   
   def reply_edit_one_month
-    @user = User.joins(:attendances).group("user_id").where(attendances: {kintai_to_who: "上長A"})
-    @attendance = Attendance.where(kintai_to_who: "上長A")
+    @user = User.joins(:attendances).group("user_id").where.not(attendances: {kintai_to_who: " "})
+    @attendance = Attendance.where.not(attendances: {kintai_to_who: " "})
   end
 
   def update_one_month
