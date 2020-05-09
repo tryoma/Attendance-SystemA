@@ -12,7 +12,7 @@
           <th>勤怠を確認する</th>
         </tr>
       </thead>
-      <% @applies_notice = Apply.where(user_id: user.id).where.not(mark_month_instructor_confirmation: "承認") %>
+      <% @applies_notice = Apply.where(user_id: user.id).where.not(mark_month_instructor_confirmation: "承認").where.not(mark_month_instructor_confirmation: "否認") %>
       <% @applies_notice.each do |notice| %>
         <%= f.fields_for "applies[]", notice do |apply| %>
           <tbody>

@@ -16,8 +16,8 @@ class AppliesController < ApplicationController
   end
   
   def reply_month
-    @user = User.joins(:applies).group("user_id").where(applies: {month_to_who: "上長A"})
-    @apply = Apply.where(month_to_who: "上長A")
+    @user = User.joins(:applies).group("user_id").where.not(applies: {month_to_who: "選択してください"})
+    @apply = Apply.where.not(month_to_who: " ")
   end
   
   def to_reply_month

@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
     @count1 = 1
+    @applies = @user.applies.where(user_id:params[:id]).where(month:@first_day)
   end
 
   def new

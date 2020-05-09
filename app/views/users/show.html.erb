@@ -136,7 +136,7 @@
              <%= out_over_times = over_working_times(format_basic_info(day.plan_finished_at), format_basic_info(@user.designated_work_end_time)) %>
             <% end %>
           </td>
-          <td><%= day.business_processing_contents%></td>
+          <td><%= day.business_processing_contents %></td>
           <td></td>
         </tr>
       <% end %>
@@ -150,7 +150,18 @@
         <td rowspan="1"><%= format("%.2f", @total_working_times.to_f) %></td>
         <td colspan="5"></td>
         <td colspan="1">
-          所属長承認<br>
+          所属長承認
+            <% unless @applies.present? %>
+              未
+            <% else %>
+              <% @applies.each do |apply| %>
+                <% if apply.mark_month_instructor_confirmation == "承認" %>
+                  <%= apply.month_to_who %>から承認済
+                <% else %>
+                  未
+                <% end %>
+              <% end %>
+            <% end %><br>
           <%= form_with(model: @apply, url:user_apply_path(@user,date:@first_day), local: true, method: :patch) do |f| %>
             <%= f.select :month_instructor_confirmation, [["選択してください"],["上長A"],["上長B"]]%>
             <%= f.submit "申請", class: "btn btn-block btn-primary" %>
