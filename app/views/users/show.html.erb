@@ -137,7 +137,18 @@
             <% end %>
           </td>
           <td><%= day.business_processing_contents %></td>
-          <td></td>
+          <td>
+            <% if day.mark_instructor_confirmation == "承認" %>
+              残業承認済
+            <% elsif day.mark_instructor_confirmation == "否認" %>
+              残業否認
+            <% end %>
+            <% if day.mark_kintai_change_instructor_confirmation == "承認" %>
+              勤怠編集承認済
+            <% elsif day.mark_kintai_change_instructor_confirmation == "否認" %>
+              勤怠編集承否認
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
