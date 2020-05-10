@@ -25,28 +25,58 @@
     </tr>
   </table>
 </div>
+<!------------申請があるかどうか------------>
+<% if @count1a > 0 %>
+  <div id="infomation_explanation1">
+    <p>
+      【所属長承認申請のお知らせ】
+      <span class="kakomi-box1">
+        <%= link_to "#{ @count1a }件の通知があります", applies_reply_month_user_path , :style=>"color:red;"%>
+      </span>
+    </p>
+  </div>
+<% else %>
+  <div id="infomation_explanation2">
+    <p>
+      【所属長承認申請のお知らせ】
+    </p>
+  </div>
+<% end %>
+<% if @count2a > 0 %>
+  <div id="infomation_explanation1">
+    <p>
+      【勤怠変更申請のお知らせ】
+      <span class="kakomi-box1">
+        <%= link_to "#{ @count2a }件の通知があります", attendances_reply_edit_one_month_user_path , :style=>"color:red;"%>
+      </span>
+    </p>
+  </div>
+<% else %>
+  <div id="infomation_explanation2">
+    <p>
+      【勤怠変更申請のお知らせ】
+    </p>
+  </div>
+<% end %>
+<% if @count3a > 0 %>
+  <div id="infomation_explanation1">
+    <p>
+      【残業申請のお知らせ】
+      <span class="kakomi-box1">
+        <%= link_to "#{ @count3a }件の通知があります", attendances_reply_overtime_user_path , :style=>"color:red;"%>
+      </span>
+    </p>
+  </div>
+<% else %>
+  <div id="infomation_explanation2">
+    <p>
+      【勤怠変更申請のお知らせ】
+    </p>
+  </div>
+<% end %>
+<!------------申請があるかどうか------------>
 
-<div id="infomation_explanation">
-  <p>
-    【所属長承認申請のお知らせ】
-    <span class="kakomi-box1">
-      <%= link_to "#{ @count1a }件の通知があります", applies_reply_month_user_path , :style=>"color:red;"%>
-    </span>
-  </p>
-  <p>
-    【勤怠変更申請のお知らせ】
-    <span class="kakomi-box1">
-      <%= link_to "#{ @count2a }件の通知があります", attendances_reply_edit_one_month_user_path , :style=>"color:red;"%>
-    </span>
-  </p>
-  <p>
-    【残業申請のお知らせ】
-    <span class="kakomi-box1">
-      <%= link_to "#{ @count3a }件の通知があります", attendances_reply_overtime_user_path , :style=>"color:red;"%>
-    </span>
-  </p>
-</div>
-
+<!------------ボタン類------------>
 <div class="btn-users-show">
   <p>
   <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
@@ -56,6 +86,7 @@
   <%= link_to "勤怠修正ログ（承認済）", "#", class: "btn btn-primary" %><br>
   </p>
 </div>
+<!------------ボタン類------------>
 
 <div>
   <table class="table table-bordered table-condensed table-hover" id="table-attendances">

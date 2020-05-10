@@ -138,11 +138,11 @@ p {
 
 /* 追加 */
 /* show画面 */
-#infomation_explanation {
+#infomation_explanation1 {
   margin: 0 0 10px 0;
   p {
     font-size: 20px;
-    color: #000000;
+    color: #ff0000;
     padding: auto;
     line-height: 25px;
   }
@@ -151,4 +151,16 @@ p {
 .kakomi-box1 {
   border: 2px solid #ff0000; /* 枠線 */
   }
+  
+#infomation_explanation2 {
+  margin: 0 0 10px 0;
+  p {
+    font-size: 20px;
+    color: #808080;
+    padding: auto;
+    line-height: 25px;
+  }
+}
+
+
 
