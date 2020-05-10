@@ -18,8 +18,13 @@ class UsersController < ApplicationController
 
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
-    @count1 = 1
     @applies = @user.applies.where(user_id:params[:id]).where(month:@first_day)
+    @count1a = Apply.where(month_to_who:"上長A",mark_month_instructor_confirmation:"申請中").count
+    @count1b = Apply.where(month_to_who:"上長B",mark_month_instructor_confirmation:"申請中").count
+    @count2a = Attendance.where(kintai_to_who:"上長A",mark_kintai_change_instructor_confirmation:"申請中").count
+    @count2b = Attendance.where(kintai_to_who:"上長B",mark_kintai_change_instructor_confirmation:"申請中").count
+    @count3a = Attendance.where(zangyou_to_who:"上長A",mark_instructor_confirmation:"申請中").count
+    @count3b = Attendance.where(zangyou_to_who:"上長B",mark_instructor_confirmation:"申請中").count
   end
 
   def new
