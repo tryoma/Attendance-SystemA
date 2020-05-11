@@ -32,7 +32,7 @@
       <p>
         【所属長承認申請のお知らせ】
         <span class="kakomi-box1">
-          <%= link_to "#{ @count1 }件の通知があります", applies_reply_month_user_path , :style=>"color:red;"%>
+          <%= link_to "#{ @count1 }件の通知があります", applies_reply_month_user_path , remote: true, :style=>"color:red;"%>
         </span>
       </p>
     </div>
@@ -48,7 +48,7 @@
       <p>
         【勤怠変更申請のお知らせ】
         <span class="kakomi-box1">
-          <%= link_to "#{ @count2 }件の通知があります", attendances_reply_edit_one_month_user_path , :style=>"color:red;"%>
+          <%= link_to "#{ @count2 }件の通知があります", attendances_reply_edit_one_month_user_path , remote: true, :style=>"color:red;"%>
         </span>
       </p>
     </div>
@@ -71,7 +71,7 @@
   <% else %>
     <div id="infomation_explanation2">
       <p>
-        【勤怠変更申請のお知らせ】
+        【残業申請のお知らせ】
       </p>
     </div>
   <% end %>
@@ -224,3 +224,7 @@
 
 <!--モーダルウインドウ表示-->
 <div id="overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+<div id="reply_month" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+<div id="reply_edit_one_month" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
