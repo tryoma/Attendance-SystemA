@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :attend_employees]
   before_action :set_one_month, only: :show
   
+  
 
   def index
     @users = User.all
@@ -19,12 +20,15 @@ class UsersController < ApplicationController
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
     @applies = @user.applies.where(user_id:params[:id]).where(month:@first_day)
-    @count1a = Apply.where(month_to_who:"上長A",mark_month_instructor_confirmation:"申請中").count
-    @count2a = Attendance.where(kintai_to_who:"上長A",mark_kintai_change_instructor_confirmation:"申請中").count
-    @count3a = Attendance.where(zangyou_to_who:"上長A",mark_instructor_confirmation:"申請中").count
-    @count1b = Apply.where(month_to_who:"上長B",mark_month_instructor_confirmation:"申請中").count
-    @count2b = Attendance.where(kintai_to_who:"上長B",mark_kintai_change_instructor_confirmation:"申請中").count
-    @count3b = Attendance.where(zangyou_to_who:"上長B",mark_instructor_confirmation:"申請中").count
+    if current_user.name == "上長A" 
+      @count1 = Apply.where(month_to_who:"上長A",mark_month_instructor_confirmation:"申請中").count
+      @count2 = Attendance.where(kintai_to_who:"上長A",mark_kintai_change_instructor_confirmation:"申請中").count
+      @count3 = Attendance.where(zangyou_to_who:"上長A",mark_instructor_confirmation:"申請中").count
+    elsif current_user.name == "上長B" 
+      @count1 = Apply.where(month_to_who:"上長B",mark_month_instructor_confirmation:"申請中").count
+      @count2 = Attendance.where(kintai_to_who:"上長B",mark_kintai_change_instructor_confirmation:"申請中").count
+      @count3 = Attendance.where(zangyou_to_who:"上長B",mark_instructor_confirmation:"申請中").count
+    end
   end
 
   def new

@@ -18,8 +18,7 @@
           <th>勤怠を確認する</th>
         </tr>
       </thead>
-      <% @attendances_notice = Attendance.where(user_id: user.id).where.not(plan_finished_at: nil).where(mark_instructor_confirmation: "申請中") %>
-      <% @attendances_notice.each do |notice| %>
+      <% @attendances.each do |notice| %>
         <%= f.fields_for "attendances[]", notice do |attendance| %>
           <% css_class = 
               case %w{日 月 火 水 木 金 土}[notice.worked_on.wday]

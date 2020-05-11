@@ -1,5 +1,9 @@
 class AppliesController < ApplicationController
-  before_action :logged_in_user, only: [:update, :reply_month]
+  before_action :logged_in_user, only: [:update, :reply_month, :to_reply_month]
+  before_action :set_user, only: [:to_reply_month]
+  before_action :logged_in_user, only: [:update, :reply_month, :to_reply_month]
+  before_action :admin_or_correct_user, only: [:update]
+  before_action :superior_user, only: [:reply_month, :to_reply_month]
   
   def update
     @user = User.find(params[:user_id])
@@ -16,8 +20,13 @@ class AppliesController < ApplicationController
   end
   
   def reply_month
-    @user = User.joins(:applies).group("user_id").where.not(applies: {month_to_who: " "})
-    @apply = Apply.where.not(month_to_who: " ")
+    if current_user.name == "上長A"
+      @user = User.joins(:applies).group("user_id").where(applies: {month_to_who: "上長A"}).where(applies: {mark_month_instructor_confirmation: "申請中"})
+      @apply = Apply.where(month_to_who: "上長A").where(mark_month_instructor_confirmation: "申請中")
+    elsif current_user.name == "上長B"
+      @user = User.joins(:applies).group("user_id").where(applies: {month_to_who: "上長B"}).where(applies: {mark_month_instructor_confirmation: "申請中"})
+      @apply = Apply.where(month_to_who: "上長B").where(mark_month_instructor_confirmation: "申請中")
+    end
   end
   
   def to_reply_month

@@ -26,53 +26,55 @@
   </table>
 </div>
 <!------------申請があるかどうか------------>
-<% if @count1a > 0 %>
-  <div id="infomation_explanation1">
-    <p>
-      【所属長承認申請のお知らせ】
-      <span class="kakomi-box1">
-        <%= link_to "#{ @count1a }件の通知があります", applies_reply_month_user_path , :style=>"color:red;"%>
-      </span>
-    </p>
-  </div>
-<% else %>
-  <div id="infomation_explanation2">
-    <p>
-      【所属長承認申請のお知らせ】
-    </p>
-  </div>
-<% end %>
-<% if @count2a > 0 %>
-  <div id="infomation_explanation1">
-    <p>
-      【勤怠変更申請のお知らせ】
-      <span class="kakomi-box1">
-        <%= link_to "#{ @count2a }件の通知があります", attendances_reply_edit_one_month_user_path , :style=>"color:red;"%>
-      </span>
-    </p>
-  </div>
-<% else %>
-  <div id="infomation_explanation2">
-    <p>
-      【勤怠変更申請のお知らせ】
-    </p>
-  </div>
-<% end %>
-<% if @count3a > 0 %>
-  <div id="infomation_explanation1">
-    <p>
-      【残業申請のお知らせ】
-      <span class="kakomi-box1">
-        <%= link_to "#{ @count3a }件の通知があります", attendances_reply_overtime_user_path , :style=>"color:red;"%>
-      </span>
-    </p>
-  </div>
-<% else %>
-  <div id="infomation_explanation2">
-    <p>
-      【勤怠変更申請のお知らせ】
-    </p>
-  </div>
+<% if current_user.superior? %>
+  <% if @count1 > 0 %>
+    <div id="infomation_explanation1">
+      <p>
+        【所属長承認申請のお知らせ】
+        <span class="kakomi-box1">
+          <%= link_to "#{ @count1 }件の通知があります", applies_reply_month_user_path , :style=>"color:red;"%>
+        </span>
+      </p>
+    </div>
+  <% else %>
+    <div id="infomation_explanation2">
+      <p>
+        【所属長承認申請のお知らせ】
+      </p>
+    </div>
+  <% end %>
+  <% if @count2 > 0 %>
+    <div id="infomation_explanation1">
+      <p>
+        【勤怠変更申請のお知らせ】
+        <span class="kakomi-box1">
+          <%= link_to "#{ @count2 }件の通知があります", attendances_reply_edit_one_month_user_path , :style=>"color:red;"%>
+        </span>
+      </p>
+    </div>
+  <% else %>
+    <div id="infomation_explanation2">
+      <p>
+        【勤怠変更申請のお知らせ】
+      </p>
+    </div>
+  <% end %>
+  <% if @count3 > 0 %>
+    <div id="infomation_explanation1">
+      <p>
+        【残業申請のお知らせ】
+        <span class="kakomi-box1">
+          <%= link_to "#{ @count3 }件の通知があります", attendances_reply_overtime_user_path , :style=>"color:red;"%>
+        </span>
+      </p>
+    </div>
+  <% else %>
+    <div id="infomation_explanation2">
+      <p>
+        【勤怠変更申請のお知らせ】
+      </p>
+    </div>
+  <% end %>
 <% end %>
 <!------------申請があるかどうか------------>
 
@@ -205,7 +207,13 @@
               <% end %>
             <% end %><br>
           <%= form_with(model: @apply, url:user_apply_path(@user,date:@first_day), local: true, method: :patch) do |f| %>
-            <%= f.select :month_instructor_confirmation, [["選択してください"],["上長A"],["上長B"]]%>
+            <% if current_user.name == "上長A" %>
+              <%= f.select :month_instructor_confirmation, [["選択してください"],["上長B"]]%>
+            <% elsif current_user.name == "上長B" %>
+              <%= f.select :month_instructor_confirmation, [["選択してください"],["上長A"]]%>
+            <% else %>
+              <%= f.select :month_instructor_confirmation, [["選択してください"],["上長A"],["上長B"]]%>
+            <% end %>
             <%= f.submit "申請", class: "btn btn-block btn-primary" %>
           <% end %>
         </td>

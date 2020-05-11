@@ -1,8 +1,9 @@
 class AttendancesController < ApplicationController
   before_action :set_user, only: [:edit_one_month, :update_one_month, :overtime]
-  before_action :logged_in_user, only: [:update, :edit_one_month]
+  before_action :logged_in_user, only: [:update, :edit_one_month, :request_edit_one_month, :reply_edit_one_month, :update_one_month, :overtime, :request_overtime, :reply_overtime, :to_reply_overtime]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month, :overtime]
+  before_action :superior_user, only: [:reply_edit_one_month, :update_one_month, :reply_overtime, :to_reply_overtime]
 
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
   REPLY_ERROR_MSG = "残業申請返信に失敗しました。やり直してください。"
@@ -54,8 +55,13 @@ class AttendancesController < ApplicationController
   end
   
   def reply_edit_one_month
-    @user = User.joins(:attendances).group("user_id").where.not(attendances: {kintai_to_who: " "})
-    @attendance = Attendance.where.not(attendances: {kintai_to_who: " "})
+    if current_user.name == "上長A"
+      @user = User.joins(:attendances).group("user_id").where(attendances: {kintai_to_who: "上長A"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"})
+      @attendance = Attendance.where(attendances: {kintai_to_who: "上長A"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"})
+    elsif current_user.name == "上長B"
+      @user = User.joins(:attendances).group("user_id").where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"})
+      @attendance = Attendance.where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"})
+    end
   end
 
   def update_one_month
@@ -98,8 +104,13 @@ class AttendancesController < ApplicationController
   end
   
   def reply_overtime
-    @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil}).where(attendances: {mark_instructor_confirmation: "申請中"})
-    @attendance = Attendance.where.not(plan_finished_at: nil).where(mark_instructor_confirmation: "申請中")
+    if current_user.name == "上長A"
+      @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil}).where(attendances: {zangyou_to_who: "上長A"}).where.not(attendances: {mark_instructor_confirmation: "承認"}).where.not(attendances: {mark_instructor_confirmation: "否認"})
+      @attendances = Attendance.where.not(plan_finished_at: nil).where(zangyou_to_who:"上長A").where.not(mark_instructor_confirmation: "承認").where.not(mark_instructor_confirmation: "否認")
+    elsif current_user.name == "上長B"
+      @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil}).where(attendances: {zangyou_to_who: "上長B"}).where.not(attendances: {mark_instructor_confirmation: "承認"}).where.not(attendances: {mark_instructor_confirmation: "否認"})
+      @attendances = Attendance.where.not(plan_finished_at: nil).where(zangyou_to_who:"上長B").where.not(mark_instructor_confirmation: "承認").where.not(mark_instructor_confirmation: "否認")
+    end
   end
   
   def to_reply_overtime
