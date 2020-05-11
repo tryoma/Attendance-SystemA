@@ -175,11 +175,15 @@
               残業承認済
             <% elsif day.mark_instructor_confirmation == "否認" %>
               残業否認
+            <% elsif day.mark_instructor_confirmation == "申請中" && day.zangyou_to_who.present? %>
+              <%= day.zangyou_to_who %>へ残業申請中
             <% end %>
             <% if day.mark_kintai_change_instructor_confirmation == "承認" %>
               勤怠編集承認済
             <% elsif day.mark_kintai_change_instructor_confirmation == "否認" %>
               勤怠編集承否認
+            <% elsif day.mark_kintai_change_instructor_confirmation == "申請中" && day.kintai_to_who.present? %>
+              <%= day.kintai_to_who %>への勤怠申請中
             <% end %>
           </td>
         </tr>
@@ -201,6 +205,8 @@
               <% @applies.each do |apply| %>
                 <% if apply.mark_month_instructor_confirmation == "承認" %>
                   <%= apply.month_to_who %>から承認済
+                <% elsif apply.mark_month_instructor_confirmation == "申請中" && apply.month_to_who.present? %>
+                  <%= apply.month_to_who %>へ申請中
                 <% else %>
                   未
                 <% end %>
