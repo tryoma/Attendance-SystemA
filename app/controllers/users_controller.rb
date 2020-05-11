@@ -76,7 +76,11 @@ class UsersController < ApplicationController
       redirect_to users_url
   end
   
+  # 出勤者ページ
   def attend_employees
+  end
+  
+  def log_check
   end
 
   private

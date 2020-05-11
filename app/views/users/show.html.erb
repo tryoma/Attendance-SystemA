@@ -85,7 +85,7 @@
   <%= link_to "CSV出力", "#", class: "btn btn-primary" %>
   </p>
   <p>
-  <%= link_to "勤怠修正ログ（承認済）", "#", class: "btn btn-primary" %><br>
+  <%= link_to "勤怠修正ログ（承認済）", log_check_user_path(current_user), class: "btn btn-primary" %><br>
   </p>
 </div>
 <!------------ボタン類------------>
@@ -183,7 +183,7 @@
             <% elsif day.mark_kintai_change_instructor_confirmation == "否認" %>
               勤怠編集承否認
             <% elsif day.mark_kintai_change_instructor_confirmation == "申請中" && day.kintai_to_who.present? %>
-              <%= day.kintai_to_who %>への勤怠申請中
+              <%= day.kintai_to_who %>へ勤怠申請中
             <% end %>
           </td>
         </tr>

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
+      get 'log_check' #勤怠確認ページ
       get 'reference' #勤怠確認ページ
       get 'edit_basic_info' #ユーザー情報編集ページ
       patch 'update_basic_info'
@@ -24,7 +25,7 @@ Rails.application.routes.draw do
       patch 'attendances/request_overtime'
       get 'attendances/reply_overtime' #残業申請確認ページ(上長)
       patch 'attendances/to_reply_overtime'
-      get 'applies/reply_month'
+      get 'applies/reply_month'#月次申請確認ページ(上長)
       patch 'applies/to_reply_month'
     end
     collection { post :import }
