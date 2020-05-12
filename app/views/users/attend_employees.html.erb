@@ -6,4 +6,18 @@
       <th>社員番号</th>
       <th>名前</th>
     </tr>
+    <% @users.each do |user| %>
+      <% user.attendances.each do |attendance| %>
+        <% if attendance.worked_on == @day %>
+          <% if attendance.started_at.present? && attendance.finished_at.nil? %>
+            <tr>
+              <th><%= user.employee_number %></th>
+              <th><%= user.name %></th>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
 </table>
+
+
