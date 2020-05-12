@@ -1,6 +1,13 @@
 <% provide(:title, "Log") %>
 
-<h1>勤怠ログ</h1>
+<h1>勤怠ログ(<%= @first_day.year %>年<%= @first_day.month %>月)</h1>
+<%= form_with(url: "#",method: :patch, local: true) do |f| %>
+<%= f.date_select :date ,{ discard_day: true,
+                           start_year: Date.today.year,
+                           end_year: @attendances.all.first.try(:worked_on).try(:year) } %>
+<%= f.submit "更新", class: "btn btn-primary" %>
+<% end %>
+
 <table class="table table-bordered table-condensed table-hover" id="table-attendances">
   <tr>
     <th>日付</th>
@@ -10,14 +17,17 @@
     <th>変更後退社時間</th>
     <th>指示者</th>
     <th>承認日</th>
-  </tr>
-  <tr>
-    <th>日付</th>
-    <th>変更前出社時間</th>
-    <th>変更前出社時間</th>
-    <th>変更後出社時間</th>
-    <th>変更後退社時間</th>
-    <th>指示者</th>
-    <th>承認日</th>
-  </tr>
+  </tr
+  
+  <% @attendances.each do |a| %>
+    <tr>
+      <th><%= a.worked_on %></th>
+      <th><%= l(a.applying_started_at, format: :time) %></th>
+      <th><%= l(a.applying_finished_at, format: :time) %></th>
+      <th><%= l(a.started_at, format: :time) %></th>
+      <th><%= l(a.started_at, format: :time) %></th>
+      <th><%= a.kintai_to_who %></th>
+      <th>承認日</th>
+    </tr>
+  <% end %>
 </table>
