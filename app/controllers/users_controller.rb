@@ -85,6 +85,12 @@ class UsersController < ApplicationController
   
   def log_check
     @attendances = @user.attendances.where(mark_kintai_change_instructor_confirmation: "承認")
+    if params[:"date(1i)"].present?
+      date = Date.new(params[:"date(1i)"].to_i, params[:"date(2i)"].to_i, params[:"date(3i)"].to_i)
+      date_first_day = date
+      date_end_day = date_first_day.end_of_month
+      @attendances = @attendances.where( worked_on: [date_first_day..date_end_day])
+    end
   end
 
   private
