@@ -94,6 +94,7 @@ class UsersController < ApplicationController
   end
   
   def reference
+
     debugger
   end
 
