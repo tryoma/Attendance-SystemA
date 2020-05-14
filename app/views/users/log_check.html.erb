@@ -26,12 +26,12 @@
   <% @attendances.each do |a| %>
     <tr>
       <th><%= a.worked_on %></th>
-      <th><%= l(a.applying_started_at, format: :time) %></th>
-      <th><%= l(a.applying_finished_at, format: :time) %></th>
-      <th><%= l(a.started_at, format: :time) %></th>
-      <th><%= l(a.started_at, format: :time) %></th>
+      <th><%= l(a.first_started_at.floor_to(15.minutes), format: :time) if a.first_started_at.present? %></th>
+      <th><%= l(a.first_finished_at.floor_to(15.minutes), format: :time) if a.first_finished_at.present? %></th>
+      <th><%= l(a.started_at, format: :time) if a.started_at.present? %></th>
+      <th><%= l(a.finished_at, format: :time) if a.finished_at.present? %></th>
       <th><%= a.kintai_to_who %></th>
-      <th>承認日</th>
+      <th><%= a.approval %></th>
     </tr>
   <% end %>
 </table>

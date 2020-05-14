@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200514120055) do
+ActiveRecord::Schema.define(version: 20200514123321) do
 
   create_table "applies", force: :cascade do |t|
     t.date "month"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20200514120055) do
     t.boolean "kintai_tomorrow"
     t.string "zangyou_to_who", default: " "
     t.date "approval"
+    t.datetime "first_started_at"
+    t.datetime "first_finished_at"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 

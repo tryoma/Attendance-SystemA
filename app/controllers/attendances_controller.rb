@@ -70,7 +70,9 @@ class AttendancesController < ApplicationController
         if params[:user][:attendances][id][:change] == "true"
           if params[:user][:attendances][id][:mark_kintai_change_instructor_confirmation] == "承認"
             attendance.update_attributes(item)
+            attendance.update(first_started_at: attendance.started_at, first_finished_at: attendance.finished_at)
             attendance.update(started_at: attendance.applying_started_at, finished_at: attendance.applying_finished_at)
+            attendance.update(approval: Date.today )
           elsif params[:user][:attendances][id][:mark_kintai_change_instructor_confirmation] == "否認"
             attendance.update_attributes(item)
           end
