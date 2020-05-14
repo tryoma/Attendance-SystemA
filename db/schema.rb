@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200509113907) do
+ActiveRecord::Schema.define(version: 20200514120055) do
 
   create_table "applies", force: :cascade do |t|
     t.date "month"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20200509113907) do
     t.string "kintai_to_who", default: " "
     t.boolean "kintai_tomorrow"
     t.string "zangyou_to_who", default: " "
+    t.date "approval"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
@@ -66,9 +67,9 @@ ActiveRecord::Schema.define(version: 20200509113907) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "affiliation"
-    t.datetime "basic_work_time", default: "2020-05-10 23:00:00"
-    t.datetime "designated_work_start_time", default: "2020-05-11 00:00:00"
-    t.datetime "designated_work_end_time", default: "2020-05-11 09:00:00"
+    t.datetime "basic_work_time", default: "2020-05-13 23:00:00"
+    t.datetime "designated_work_start_time", default: "2020-05-14 00:00:00"
+    t.datetime "designated_work_end_time", default: "2020-05-14 09:00:00"
     t.string "uid"
     t.integer "employee_number"
     t.boolean "superior", default: false
