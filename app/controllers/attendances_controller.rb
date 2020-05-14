@@ -134,8 +134,7 @@ class AttendancesController < ApplicationController
   
   
 #<!----------勤怠確認参照------------>
-  def reference
-  end
+  
   
   
   

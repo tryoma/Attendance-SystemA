@@ -92,6 +92,10 @@ class UsersController < ApplicationController
       @attendances = @attendances.where( worked_on: [date_first_day..date_end_day])
     end
   end
+  
+  def reference
+    debugger
+  end
 
   private
 
