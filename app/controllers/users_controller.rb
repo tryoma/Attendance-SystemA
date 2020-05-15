@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :attend_employees]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :attend_employees]
-  before_action :set_one_month, only: [:show, :log_check]
+  before_action :set_one_month, only: [:show, :log_check, :reference]
   before_action :current_user_admin, only: :show
   
   
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
       redirect_to users_url
   end
   
-  # 出勤者ページ
+  # 出勤者��ージ
   def attend_employees
     @users = User.all.includes(:attendances)
     @day = Date.today
@@ -94,7 +94,9 @@ class UsersController < ApplicationController
   end
   
   def reference
-
+    @user = User.find(params[:id])
+    @worked_sum = @attendances.where.not(started_at: nil).count
+    @applies = @user.applies.where(user_id:params[:id]).where(month:@first_day)
     debugger
   end
 
