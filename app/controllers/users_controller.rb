@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :log_check]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :log_check, :reference]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :attend_employees]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :attend_employees]
@@ -94,10 +94,8 @@ class UsersController < ApplicationController
   end
   
   def reference
-    @user = User.find(params[:id])
     @worked_sum = @attendances.where.not(started_at: nil).count
     @applies = @user.applies.where(user_id:params[:id]).where(month:@first_day)
-    debugger
   end
 
   private

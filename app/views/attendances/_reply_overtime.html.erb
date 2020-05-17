@@ -24,7 +24,12 @@
                 <th>勤怠を確認する</th>
               </tr>
             </thead>
-            <% @attendances.each do |notice| %>
+            <% if current_user.name == "上長A" %>
+              <% @attendances_notice = Attendance.where(user_id: user.id).where(zangyou_to_who: "上長A").where.not(mark_instructor_confirmation: "承認").where.not(mark_instructor_confirmation: "否認") %>
+            <% elsif current_user.name == "上長B" %>
+              <% @attendances_notice = Attendance.where(user_id: user.id).where(zangyou_to_who: "上長B").where.not(mark_instructor_confirmation: "承認").where.not(mark_instructor_confirmation: "否認") %>
+            <% end %>
+            <% @attendances_notice.each do |notice| %>
               <%= f.fields_for "attendances[]", notice do |attendance| %>
                 <% css_class = 
                     case %w{日 月 火 水 木 金 土}[notice.worked_on.wday]
@@ -55,7 +60,7 @@
                     <th><%= attendance.select :mark_instructor_confirmation, [["なし"],["申請中"],["承認"],["否認"]]%></th>
                     <th><%= attendance.check_box :change, {class: "change"}, 'true', 'false' %></th>
                     <th>
-                    　<%= link_to "確認", reference_user_path , target:true, class: "btn btn-primary btn-primary" %>
+                    　<%= link_to "確認", reference_user_path(user,date:notice.worked_on.beginning_of_month)  , target:true, class: "btn btn-primary btn-primary" %>
                     </th>
                   </tr>
                 </tbody>
