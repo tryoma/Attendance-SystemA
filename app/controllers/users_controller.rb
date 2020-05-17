@@ -13,8 +13,7 @@ class UsersController < ApplicationController
   end
   
   def import
-    # fileはtmpに自動で一時保存される
-    User.import(params[:file])
+    User.import(params[:file]) # fileはtmpに自動で一時保存される
     redirect_to users_url
   end
 

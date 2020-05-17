@@ -22,10 +22,14 @@ class User < ApplicationRecord
 
 
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
-      user = new
-      user.attributes = row.to_hash.slice(*updatable_attributes)
-      user.save!
+    if file.nil?
+     return  
+    else
+      CSV.foreach(file.path, headers: true) do |row|
+        user = new
+        user.attributes = row.to_hash.slice(*updatable_attributes)
+        user.save!
+      end
     end
   end
 
