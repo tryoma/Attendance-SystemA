@@ -1,3 +1,5 @@
+require 'csv'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :log_check, :reference]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :attend_employees]
@@ -29,8 +31,29 @@ class UsersController < ApplicationController
       @count2 = Attendance.where(kintai_to_who:"上長B",mark_kintai_change_instructor_confirmation:"申請中").count
       @count3 = Attendance.where(zangyou_to_who:"上長B",mark_instructor_confirmation:"申請中").count
     end
+    
+    respond_to do |format|
+      format.html
+      format.csv do |csv|
+        send_attendances_csv(@attendances)
+      end
+    end
   end
-
+  
+  def send_attendances_csv(attendances)
+    csv_data = CSV.generate do |csv|
+      header = %w(日付 始業時間 終業時間)
+      csv << header
+      
+      attendances.each do |attendance|
+        values = [attendance.worked_on, (attendance.started_at.strftime("%R") unless attendance.started_at.nil?) , (attendance.finished_at.strftime("%R") unless attendance.finished_at.nil? )]
+        csv << values
+      end
+    end
+    send_data(csv_data, filename: "attendances.csv")
+  end
+  
+  
   def new
     @user = User.new
   end
