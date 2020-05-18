@@ -5,7 +5,9 @@ class Attendance < ApplicationRecord
   validates :note, length: { maximum: 50 }
   
   # 出勤時間が存在しない場合、退勤時間は無効(applying)
-  validate :applying_finished_at_is_invalid_without_a_started_at
+  validate :applying_finished_at_is_invalid_without_applying_started_at
+  # 退勤時間が存在しない場合、出勤時間は無効(applying)
+  validate :applying_started_at_is_invalid_without_applying_finished_at
   # 出勤・退勤時間どちらも存在する時、出勤時間より早い退勤時間は無効(applying)
   validate :applying_started_at_than_applying_finished_at_fast_if_invalid
 
@@ -16,13 +18,17 @@ class Attendance < ApplicationRecord
   validate :started_at_than_finished_at_fast_if_invalid
 
   #(applying)
-  def applying_finished_at_is_invalid_without_a_started_at
+  def applying_finished_at_is_invalid_without_applying_started_at
     errors.add(:applying_started_at, "が必要です") if applying_started_at.blank? && applying_finished_at.present?
+  end
+  
+  def applying_started_at_is_invalid_without_applying_finished_at
+    errors.add(:applying_finished_at, "が必要です") if applying_finished_at.blank? && applying_started_at.present?
   end
 
   def applying_started_at_than_applying_finished_at_fast_if_invalid
     if applying_started_at.present? && applying_finished_at.present?
-      if kintai_tomorrow == "false"
+      if kintai_tomorrow == false
         errors.add(:applying_started_at, "より早い退勤時間(変更後)は無効です") if applying_started_at > applying_finished_at
       end
     end
