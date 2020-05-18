@@ -46,7 +46,7 @@ class UsersController < ApplicationController
       csv << header
       
       attendances.each do |attendance|
-        values = [attendance.worked_on, (attendance.started_at.strftime("%R") unless attendance.started_at.nil?) , (attendance.finished_at.strftime("%R") unless attendance.finished_at.nil? )]
+        values = [attendance.worked_on, (attendance.started_at.floor_to(15.minutes).strftime("%R") unless attendance.started_at.nil?) , (attendance.finished_at.floor_to(15.minutes).strftime("%R") unless attendance.finished_at.nil? )]
         csv << values
       end
     end
