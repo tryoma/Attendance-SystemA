@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails',        '~> 5.1.6'
 gem 'rails-i18n'
+gem 'rounding'
+gem 'roo'
 gem 'bcrypt'
 gem 'faker'
 gem 'bootstrap-sass'
@@ -16,8 +18,9 @@ gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.13'
+  gem 'sqlite3'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry'
 end
 
 group :development do
