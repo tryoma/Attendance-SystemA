@@ -4,7 +4,7 @@ class AttendancesController < ApplicationController
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month, :overtime]
   before_action :superior_user, only: [:reply_edit_one_month, :update_one_month, :reply_overtime, :to_reply_overtime]
-
+  
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
   REPLY_ERROR_MSG = "残業申請返信に失敗しました。やり直してください。"
 
@@ -62,6 +62,7 @@ class AttendancesController < ApplicationController
       @user = User.joins(:attendances).group("user_id").where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"})
       @attendance = Attendance.where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"})
     end
+    debugger
   end
 
   def update_one_month
@@ -84,6 +85,7 @@ class AttendancesController < ApplicationController
   
 #<!----------残業申請------------>
   def overtime
+    debugger
     @day = Date.parse(params[:date])
     @youbi = %w(日 月 火 水 木 金 土)[@day.wday]
     @attendance = Attendance.find_by(worked_on:params[:date])
