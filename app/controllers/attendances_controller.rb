@@ -62,7 +62,6 @@ class AttendancesController < ApplicationController
       @user = User.joins(:attendances).group("user_id").where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"})
       @attendance = Attendance.where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"})
     end
-    debugger
   end
 
   def update_one_month
