@@ -27,7 +27,7 @@
                     <th><%= apply.select :mark_month_instructor_confirmation, [["なし"],["申請中"],["承認"],["否認"]]%></th>
                     <th><%= apply.check_box :change, {class: "change"}, 'true', 'false' %></th>
                     <th>
-                      <%= link_to "確認", reference_user_path(user,date:notice.month) , target:true, class: "btn btn-primary btn-primary" %>
+                      <%= link_to "確認", reference_user_path(user, date:notice.month) , target:true, class: "btn btn-primary btn-primary" %>
                     </th>
                   </tr>
                 </tbody>
