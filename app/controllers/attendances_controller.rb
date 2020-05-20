@@ -84,7 +84,6 @@ class AttendancesController < ApplicationController
   
 #<!----------残業申請------------>
   def overtime
-    debugger
     @day = Date.parse(params[:date])
     @youbi = %w(日 月 火 水 木 金 土)[@day.wday]
     @attendance = Attendance.find_by(worked_on:params[:date])
