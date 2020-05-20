@@ -30,9 +30,9 @@
   <% if @count1 > 0 %>
     <div id="infomation_explanation1">
       <p>
-        【所属長承認申請のお知らせ】
+        <%= link_to "【所属長承認申請のお知らせ】", applies_reply_month_user_path , remote: true %>
         <span class="kakomi-box1">
-          <%= link_to "#{ @count1 }件の通知があります", applies_reply_month_user_path , remote: true, :style=>"color:red;" %>
+          <%= @count1 %>件の通知があります
         </span> 
       </p>
     </div>
