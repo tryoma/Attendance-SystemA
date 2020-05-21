@@ -21,10 +21,10 @@ class AppliesController < ApplicationController
   
   def reply_month
     if current_user.name == "上長A"
-      @user = User.joins(:applies).group("user_id").where(applies: {month_to_who: "上長A"}).where(applies: {mark_month_instructor_confirmation: "申請中"}).order(nil)
+      @user = User.joins(:applies).group(:id).where(applies: {month_to_who: "上長A"}).where(applies: {mark_month_instructor_confirmation: "申請中"}).order(nil)
       @apply = Apply.where(month_to_who: "上長A").where(mark_month_instructor_confirmation: "申請中").order(nil)
     elsif current_user.name == "上長B"
-      @user = User.joins(:applies).group("user_id").where(applies: {month_to_who: "上長B"}).where(applies: {mark_month_instructor_confirmation: "申請中"}).order(nil)
+      @user = User.joins(:applies).group(:id).where(applies: {month_to_who: "上長B"}).where(applies: {mark_month_instructor_confirmation: "申請中"}).order(nil)
       @apply = Apply.where(month_to_who: "上長B").where(mark_month_instructor_confirmation: "申請中").order(nil)
     end
   end

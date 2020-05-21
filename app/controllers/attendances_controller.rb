@@ -56,10 +56,10 @@ class AttendancesController < ApplicationController
   
   def reply_edit_one_month
     if current_user.name == "上長A"
-      @user = User.joins(:attendances).group("user_id").where(attendances: {kintai_to_who: "上長A"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"}).order(nil)
+      @user = User.joins(:attendances).group(:id).where(attendances: {kintai_to_who: "上長A"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"}).order(nil)
       @attendance = Attendance.where(attendances: {kintai_to_who: "上長A"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"}).order(nil)
     elsif current_user.name == "上長B"
-      @user = User.joins(:attendances).group("user_id").where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"}).order(nil)
+      @user = User.joins(:attendances).group(:id).where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"}).order(nil)
       @attendance = Attendance.where(attendances: {kintai_to_who: "上長B"}).where(attendances: {mark_kintai_change_instructor_confirmation: "申請中"}).order(nil)
     end
   end
@@ -107,10 +107,10 @@ class AttendancesController < ApplicationController
   
   def reply_overtime
     if current_user.name == "上長A"
-      @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil}).where(attendances: {zangyou_to_who: "上長A"}).where.not(attendances: {mark_instructor_confirmation: "承認"}).where.not(attendances: {mark_instructor_confirmation: "否認"}).order(nil)
+      @user = User.joins(:attendances).group(:id).where.not(attendances: {plan_finished_at: nil}).where(attendances: {zangyou_to_who: "上長A"}).where.not(attendances: {mark_instructor_confirmation: "承認"}).where.not(attendances: {mark_instructor_confirmation: "否認"}).order(nil)
       @attendances = Attendance.where.not(plan_finished_at: nil).where(zangyou_to_who:"上長A").where.not(mark_instructor_confirmation: "承認").where.not(mark_instructor_confirmation: "否認").order(nil)
     elsif current_user.name == "上長B"
-      @user = User.joins(:attendances).group("user_id").where.not(attendances: {plan_finished_at: nil}).where(attendances: {zangyou_to_who: "上長B"}).where.not(attendances: {mark_instructor_confirmation: "承認"}).where.not(attendances: {mark_instructor_confirmation: "否認"}).order(nil)
+      @user = User.joins(:attendances).group(:id).where.not(attendances: {plan_finished_at: nil}).where(attendances: {zangyou_to_who: "上長B"}).where.not(attendances: {mark_instructor_confirmation: "承認"}).where.not(attendances: {mark_instructor_confirmation: "否認"}).order(nil)
       @attendances = Attendance.where.not(plan_finished_at: nil).where(zangyou_to_who:"上長B").where.not(mark_instructor_confirmation: "承認").where.not(mark_instructor_confirmation: "否認").order(nil)
     end
   end
