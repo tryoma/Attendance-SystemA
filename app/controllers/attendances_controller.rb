@@ -44,13 +44,10 @@ class AttendancesController < ApplicationController
           elsif attendance.mark_kintai_change_instructor_confirmation == "否認"
             attendance.update(mark_kintai_change_instructor_confirmation: "申請中")
           end
-          flash[:success] = "勤怠変更申請を行いました。"
-          redirect_to user_url(date: params[:date]) and return
-        else
-          flash[:danger] = "申請先を入力してください。"
-          redirect_to user_url(date: params[:date]) and return
         end
       end
+      flash[:success] = "チェックのあった日付の勤怠変更申請を行いました。"
+      redirect_to user_url(date: params[:date]) 
     end
     
   rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。

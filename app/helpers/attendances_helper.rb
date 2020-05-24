@@ -12,7 +12,7 @@ module AttendancesHelper
   
   # 出勤時間と退勤時間を受け取り、在社時間を計算して返します。
   def working_times(attendance)
-    if attendance.kintai_tomorrow
+    if attendance.kintai_tomorrow && attendance.mark_kintai_change_instructor_confirmation == "承認"
       format("%.2f", (((attendance.finished_at - attendance.started_at) / 60) / 60.0) + 24 )
     else
       format("%.2f", (((attendance.finished_at - attendance.started_at) / 60) / 60.0))
