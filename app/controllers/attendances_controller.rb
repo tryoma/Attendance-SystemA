@@ -91,7 +91,7 @@ class AttendancesController < ApplicationController
 
   def request_overtime
     @attendance = Attendance.find_by(worked_on:params[:date],user_id:params[:id])
-    unless params[:attendance][:plan_finished_at].present? || params[:attendance][:instructor_confirmation] != "選択してください"
+    if params[:attendance][:plan_finished_at].blank? || params[:attendance][:instructor_confirmation] == "選択してください"
       flash[:danger] = "申請先または申請時間を入力してください"
       redirect_to user_url and return  
     else  
@@ -99,6 +99,9 @@ class AttendancesController < ApplicationController
       @attendance.update_attributes(zangyou_to_who:params[:attendance][:instructor_confirmation])
       if @attendance.mark_instructor_confirmation != "申請中"
         @attendance.update_attributes(mark_instructor_confirmation: "申請中")
+      end
+      if @attendance.tomorrow != true
+        @attendance.update_attributes(tomorrow: false )
       end
       flash[:success] = "残業申請しました。"
       redirect_to user_url

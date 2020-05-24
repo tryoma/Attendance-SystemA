@@ -162,14 +162,30 @@
               <%= day.note %>
             <% end %>
           </td>
-          <td><%= l(day.plan_finished_at, format: :th) if day.plan_finished_at.present? %> </td>
-          <td><%= l(day.plan_finished_at.floor_to(15.minutes), format: :tm) if day.plan_finished_at.present? %> </td>
           <td>
-            <% if day.plan_finished_at.present?  %>
-             <%= out_over_times = over_working_times(format_basic_info(day.plan_finished_at), format_basic_info(@user.designated_work_end_time)) %>
+            <% if day.mark_instructor_confirmation == "承認" %>
+              <%= l(day.plan_finished_at, format: :th) if day.plan_finished_at.present? %>
             <% end %>
           </td>
-          <td><%= day.business_processing_contents %></td>
+          <td>
+            <% if day.mark_instructor_confirmation == "承認" %>
+              <%= l(day.plan_finished_at.floor_to(15.minutes), format: :tm) if day.plan_finished_at.present? %>
+            <% end %>
+          </td>
+          <td>
+            <% if day.mark_instructor_confirmation == "承認" %>
+             <% if day.tomorrow == true %>
+                <%= out_over_times = next_day_over_working_times(format_basic_info(day.plan_finished_at), format_basic_info(@user.designated_work_end_time)) %>
+              <% else %>
+                <%= out_over_times = over_working_times(format_basic_info(day.plan_finished_at), format_basic_info(@user.designated_work_end_time)) %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <% if day.mark_instructor_confirmation == "承認" %>
+              <%= day.business_processing_contents %>
+            <% end %>
+          </td>
           <td>
             <% if day.mark_instructor_confirmation == "承認" %>
               残業承認済
